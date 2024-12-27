@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -51,7 +52,6 @@ const Contact = () => {
         body: formData,
       });
 
-      const result = await response.text();
       alert(result);
     } catch (error) {
       console.error('Error uploading file:', error);
