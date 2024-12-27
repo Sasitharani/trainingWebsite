@@ -8,6 +8,56 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    const validFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (selectedFile && !validFileTypes.includes(selectedFile.type)) {
+      setError('Invalid file type. Only image files, PDF, and Word documents are allowed.');
+      setFile(null);
+      return;
+    }
+
+    if (selectedFile && selectedFile.size > maxSize) {
+      setError('File size exceeds 5MB. Please upload a smaller file.');
+      setFile(null);
+      return;
+    }
+
+    setError('');
+    setFile(selectedFile);
+  };
+
+  const handleFileUpload = async () => {
+    if (!file) {
+      setError('Please select a file to upload');
+      return;
+    }
+    event.preventDefault();
+    if (!file) {
+      alert('Please select a file to upload.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('upload.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.text();
+      alert(result);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file.');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,14 +65,23 @@ const Contact = () => {
     setError('');
     setLoading(true);
 
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('message', message);
+    if (file) {
+      formData.append('file', file);
+    }
+
     try {
       const response = await fetch('http://localhost:3001/api/send-email', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, phone, message }),
+        body: formData,
       });
+
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
 
       if (response.ok) {
         setSubmitted(true);
@@ -30,9 +89,9 @@ const Contact = () => {
         setEmail('');
         setPhone('');
         setMessage('');
+        setFile(null);
       } else {
-        const errorData = await response.json();
-        console.error('Error response:', errorData);
+        console.error('Error response:', responseText);
         setError('Error sending email');
       }
     } catch (error) {
@@ -108,6 +167,17 @@ const Contact = () => {
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="file">
+            File (Only image files, PDF, and Word documents are allowed. Max size: 5MB)
+          </label>
+          <input
+            type="file"
+            id="file"
+            onChange={handleFileChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
