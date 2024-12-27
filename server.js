@@ -40,7 +40,7 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
 
   const mailOptions = {
     from: 'sasitharani@gmail.com',
-    to: 'sasitharani@gmail.com', // replace with the recipient's email address
+    to: ['sasitharani@gmail.com', 'hrd@insphile.in'], // add the recipient's email addresses
     subject: 'Insphile-New Contact Form Submission',
     text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`,
     attachments: file ? [{ filename: file.originalname, path: file.path }] : [],
