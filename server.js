@@ -12,6 +12,12 @@ const port = 3001;
 app.use(bodyParser.json());
 app.use(cors());
 
+// Ensure the uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
@@ -39,7 +45,7 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
-      return res.status(500).json({ error: 'Error sending email' });
+      return res.status(500).json({ error: 'Error sending email', details: error.message });
     }
     console.log('Email sent:', info.response);
     res.status(200).json({ message: 'File uploaded successfully and email sent.' });
@@ -53,6 +59,11 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
       });
     }
   });
+});
+
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: 'Internal Server Error', details: err.message });
 });
 
 app.listen(port, () => {
