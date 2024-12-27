@@ -91,7 +91,7 @@ const Contact = () => {
         setPhone('');
         setMessage('');
         setFile(null);
-        Swal.fire('Success', 'File uploaded successfully and email sent.', 'success');
+        Swal.fire('Success', 'Email sent successfully.', 'success');
       } else {
         console.error('Error response:', responseText);
         setError('Error sending email');

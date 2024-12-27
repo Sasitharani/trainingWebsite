@@ -48,7 +48,7 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
       return res.status(500).json({ error: 'Error sending email', details: error.message });
     }
     console.log('Email sent:', info.response);
-    res.status(200).json({ message: 'File uploaded successfully and email sent.' });
+    res.status(200).json({ message: 'Email sent successfully.' });
 
     // Delete the file after sending the email
     if (file) {
