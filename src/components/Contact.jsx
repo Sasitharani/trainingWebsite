@@ -52,6 +52,7 @@ const Contact = () => {
         body: formData,
       });
 
+      const result = await response.text();
       alert(result);
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -75,7 +76,7 @@ const Contact = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/send-email', {
+      const response = await fetch('https://staterreactwithtailwind.onrender.com/api/send-email', {
         method: 'POST',
         body: formData,
       });
@@ -90,14 +91,16 @@ const Contact = () => {
         setPhone('');
         setMessage('');
         setFile(null);
-        alert('File uploaded successfully and email sent.');
+        Swal.fire('Success', 'File uploaded successfully and email sent.', 'success');
       } else {
         console.error('Error response:', responseText);
         setError('Error sending email');
+        Swal.fire('Error', 'Error sending email', 'error');
       }
     } catch (error) {
       console.error('Error sending email:', error);
       setError('Error sending email');
+      Swal.fire('Error', 'Error sending email', 'error');
     } finally {
       setLoading(false);
     }
