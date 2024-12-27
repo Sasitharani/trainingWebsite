@@ -1,11 +1,13 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
 const port = 3001;
 
 app.use(bodyParser.json());
+app.use(cors()); // Add this line to enable CORS
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
