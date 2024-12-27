@@ -26,6 +26,8 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
   const { name, email, phone, message } = req.body;
   const file = req.file;
 
+  console.log('File:', file); // Debugging information
+
   const mailOptions = {
     from: 'sasitharani@gmail.com',
     to: 'sasitharani@gmail.com', // replace with the recipient's email address
@@ -40,7 +42,7 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
       return res.status(500).json({ error: 'Error sending email' });
     }
     console.log('Email sent:', info.response);
-    res.status(200).json({ message: 'Email sent successfully' });
+    res.status(200).json({ message: 'File uploaded successfully and email sent.' });
 
     // Delete the file after sending the email
     if (file) {
@@ -51,13 +53,6 @@ app.post('/api/send-email', upload.single('file'), (req, res) => {
       });
     }
   });
-});
-
-app.post('/api/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
-  }
-  res.status(200).json({ message: 'File uploaded successfully', file: req.file });
 });
 
 app.listen(port, () => {

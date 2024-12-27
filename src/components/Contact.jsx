@@ -90,6 +90,7 @@ const Contact = () => {
         setPhone('');
         setMessage('');
         setFile(null);
+        alert('File uploaded successfully and email sent.');
       } else {
         console.error('Error response:', responseText);
         setError('Error sending email');
