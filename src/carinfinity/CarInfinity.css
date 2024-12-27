@@ -1,0 +1,63 @@
+body {
+	align-items: center;
+	background: #E3E3E3;
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+}
+
+.white-gradient {
+	background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+}
+
+:root {
+  --animationSpeed: 40s;
+}
+
+/* Animation */
+@keyframes scroll {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(calc(-250px * 7)); }
+}
+
+
+/* Styling */
+.slider {
+  background: white;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 960px;
+}
+
+.slider::before,
+.slider::after {
+  @apply white-gradient;
+  content: "";
+  height: 100px;
+  position: absolute;
+  width: 100px;
+  z-index: 2;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-250px * 7)); /* Adjust based on the number of items */
+  }
+}
+
+.slide-track {
+  display: flex;
+  width: calc(250px * 14); /* Adjust based on the number of items */
+  animation: scroll 20s linear infinite; /* Adjust the duration as needed */
+}
+
+.slide {
+  height: 100px;
+  width: 250px;
+}
