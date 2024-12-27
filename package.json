@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
+    "body-parser": "^1.20.3",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16",
     "postcss-cli": "^11.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
