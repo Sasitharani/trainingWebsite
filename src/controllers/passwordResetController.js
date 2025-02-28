@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import db from '../db'; // Ensure the correct path
 
 const sendResetEmail = async (req, res) => {
-  //console.log("send-reset-email hit");
   const { email, code } = req.body;
 
   let transporter = nodemailer.createTransport({
