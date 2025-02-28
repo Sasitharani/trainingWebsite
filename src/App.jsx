@@ -3,6 +3,7 @@ import Front from './components/Front';
 import Header from './components/Header';
 import CodingTraining from './components/CodingTraining';
 import PlacementTraining from './components/PlacementTraining';
+import Signup from './components/Signup';
 
 import './App.css';
 import './tailwind.css';
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Front />} />
         <Route path="/coding" element={<CodingTraining />} />
         <Route path="/placement" element={<PlacementTraining />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
