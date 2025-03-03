@@ -5,7 +5,7 @@ import db from '../../db.js'; // Ensure the correct path
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const query = 'SELECT * FROM iiti WHERE email = ?';
+    const query = 'SELECT * FROM iitiusers WHERE email = ?';
     db.query(query, [email], async (err, results) => {
       if (err) {
         console.error('Error fetching user:', err);

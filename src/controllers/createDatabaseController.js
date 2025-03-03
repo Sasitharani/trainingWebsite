@@ -1,7 +1,7 @@
 import db from '../../db.js'; // Ensure the correct path
 
 const createDatabase = (req, res) => {
-  const createDatabaseQuery = 'CREATE DATABASE IF NOT EXISTS IITI';
+  const createDatabaseQuery = 'CREATE DATABASE IF NOT EXISTS iitiusers';
 
   db.query(createDatabaseQuery, (err, result) => {
     if (err) {

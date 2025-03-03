@@ -6,7 +6,7 @@ export const comparePasswordController = (req, res) => {
 
     console.log('Received password :-', password);
 
-    const query = 'SELECT * FROM iiti WHERE password = ?';
+    const query = 'SELECT * FROM iitiusers WHERE password = ?';
 
     db.query(query, [password], (err, results) => {
         if (err) {

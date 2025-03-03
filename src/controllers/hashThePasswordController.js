@@ -7,7 +7,7 @@ export const hashThePasswordController = (req, res) => {
     //console.log('Hashed Password during Pass:', hpassword);
 
     const query = `
-        INSERT INTO iiti (username, password, email, Pass)
+        INSERT INTO iitiusers (username, password, email, Pass)
         VALUES (?, ?, ?, ?)
     `;
     const values = [username, password, email, hpassword];

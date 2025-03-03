@@ -3,7 +3,7 @@ import db from '../../db.js'; // Ensure the correct path
 const checkEmailAvailability = (req, res) => {
   const { email } = req.body;
 
-  const query = 'SELECT * FROM iiti WHERE email = ?';
+  const query = 'SELECT * FROM iitiusers WHERE email = ?';
   db.query(query, [email], (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);

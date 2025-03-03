@@ -8,7 +8,7 @@ const googleLogin = async (req, res) => {
   //console.log("Google Login hit");
   const { email, name } = req.body;
   try {
-    const query = 'SELECT * FROM iiti WHERE email = ?';
+    const query = 'SELECT * FROM iitiusers WHERE email = ?';
     db.query(query, [email], async (err, results) => {
       if (err) {
         console.error('Error fetching data:', err);
@@ -20,7 +20,7 @@ const googleLogin = async (req, res) => {
       if (!user) {
         // If user does not exist, create a new user
         const insertQuery = `
-          INSERT INTO iiti (username, email)
+          INSERT INTO iitiusers (username, email)
           VALUES (?, ?)
         `;
         const values = [name, email];
