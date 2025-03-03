@@ -6,7 +6,7 @@ const signup = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = `
-      INSERT INTO userdb (username, password, email)
+      INSERT INTO iiti (username, password, email)
       VALUES (?, ?, ?)
     `;
     const values = [username, hashedPassword, email];

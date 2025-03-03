@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 const fetchVotesDetails = async (username, email, dispatch) => {
   try {
-    const response = await axios.post('https://contest-nda5.onrender.com/api/fetchVotesDetails', {
+    const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/fetchVotesDetails', {
       username,
       email
     });
@@ -32,7 +32,7 @@ const fetchVotesDetails = async (username, email, dispatch) => {
 
 const updateVotes = async (username, email, dispatch) => {
   try {
-    const response = await axios.post('https://contest-nda5.onrender.com/api/updateVotes', {
+    const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/updateVotes', {
       username,
       email
     });

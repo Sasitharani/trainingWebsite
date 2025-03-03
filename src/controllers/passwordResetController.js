@@ -42,7 +42,7 @@ const resetPassword = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     const query = `
-      UPDATE userdb SET password = ? WHERE email = ?
+      UPDATE iiti SET password = ? WHERE email = ?
     `;
     const values = [hashedPassword, email];
     db.query(query, values, (err, results) => {
