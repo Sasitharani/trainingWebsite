@@ -1,38 +1,34 @@
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import db from '../../db.js'; // Ensure the correct path
 
-const SECRET_KEY = process.env.SECRET_KEY || 'your_default_secret_key'; // Use environment variable or default key
-
 const login = async (req, res) => {
-  //console.log('Login Controller called');
   const { email, password } = req.body;
   try {
     const query = 'SELECT * FROM userdb WHERE email = ?';
     db.query(query, [email], async (err, results) => {
       if (err) {
-        console.error('Error fetching data:', err);
+        console.error('Error fetching user:', err);
         res.status(500).send('Login failed. Please try again.');
         return;
       }
+      if (results.length === 0) {
+        res.status(401).send('Invalid email or password.');
+        return;
+      }
       const user = results[0];
-
-      if (!user) {
-        return res.status(404).send({ message: 'User not found!' });
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        res.status(401).send('Invalid email or password.');
+        return;
       }
-
-      const passwordIsValid = await bcrypt.compare(password, user.password);
-      if (!passwordIsValid) {
-        return res.status(401).send({ message: 'Invalid password!' });
-      }
-
-      const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '1h' });
-      //console.log('Username:', user.username);
-      return res.status(200).json({ token, message: 'Login Successfully', hashedPassword: user.password, username: user.username });
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      });
+      res.status(200).send({ token });
     });
   } catch (error) {
-    console.error('Error logging in:', error);
-    res.status(500).send('Error logging in');
+    res.status(500).send('Error logging in user');
   }
 };
 

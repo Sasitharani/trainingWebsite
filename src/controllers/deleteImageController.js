@@ -1,33 +1,50 @@
-import ftp from 'ftp';
+import FTP from 'ftp';
 import path from 'path';
+import db from '../db.js'; // Ensure the correct path
 
-const deleteImage = (req, res) => {
-    const { url } = req.body;
-
-    console.log('URL:', url); // Log the URL to ensure it's being received correctly
-    if (!url) {
-        return res.status(400).send('Path does not exist. Inform the technical team');
-    }
-
-    const client = new ftp();
-    client.on('ready', () => {
-        const remoteFilePath = `/public_html/www.contests4all.com/public/img/uploads/${path.basename(url)}`;
-        client.delete(remoteFilePath, (err) => {
+const deleteImage = async (req, res) => {
+  const { imageId } = req.body;
+  try {
+    const query = 'SELECT * FROM images WHERE id = ?';
+    db.query(query, [imageId], (err, results) => {
+      if (err) {
+        console.error('Error fetching image:', err);
+        res.status(500).send('Delete failed. Please try again.');
+        return;
+      }
+      if (results.length === 0) {
+        res.status(404).send('Image not found.');
+        return;
+      }
+      const image = results[0];
+      const client = new FTP();
+      client.on('ready', () => {
+        client.delete(image.path, (err) => {
+          if (err) {
+            console.error('Error deleting image from FTP:', err);
+            res.status(500).send('Delete failed. Please try again.');
+            return;
+          }
+          const deleteQuery = 'DELETE FROM images WHERE id = ?';
+          db.query(deleteQuery, [imageId], (err) => {
             if (err) {
-                console.error('Error deleting image from FTP server:', err);
-                return res.status(500).send('Error deleting image from FTP server');
+              console.error('Error deleting image from database:', err);
+              res.status(500).send('Delete failed. Please try again.');
+              return;
             }
-            console.log('Image deleted from FTP server:', remoteFilePath);
-            res.status(200).send('Image deleted successfully');
-            client.end();
+            res.status(200).send({ message: 'Image deleted successfully!' });
+          });
         });
+      });
+      client.connect({
+        host: process.env.FTP_HOST,
+        user: process.env.FTP_USER,
+        password: process.env.FTP_PASSWORD,
+      });
     });
-
-    client.connect({
-        host: "68.178.150.66",
-        user: "l3ppzni4r1in",
-        password: "SasiJaga09$",
-    });
+  } catch (error) {
+    res.status(500).send('Error deleting image');
+  }
 };
 
 export { deleteImage };

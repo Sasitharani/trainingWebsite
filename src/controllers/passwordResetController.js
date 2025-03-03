@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcryptjs';
-import db from '../db'; // Ensure the correct path
+import db from '../db.js'; // Ensure the correct path
 
 const sendResetEmail = async (req, res) => {
   const { email, code } = req.body;
