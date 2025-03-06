@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import db from '../../db.js'; // Ensure the correct path
+import db from '../db.js'; // Ensure the correct path
 
 const login = async (req, res) => {
   const { email, password } = req.body;
