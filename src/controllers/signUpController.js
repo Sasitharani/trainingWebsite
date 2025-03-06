@@ -25,4 +25,37 @@ const signup = async (req, res) => {
   }
 };
 
-export { signup };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const query = `SELECT * FROM iitiusers WHERE email = ?`;
+    db.query(query, [email], async (err, results) => {
+      if (err) {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Login failed. Please try again.');
+        return;
+      }
+      if (results.length === 0) {
+        res.status(401).send('Invalid email or password.');
+        return;
+      }
+      const user = results[0];
+      console.log('User fetched from database:', user);
+      console.log('Password from request:', password);
+      console.log('Hashed password from database:', user.password);
+
+      const passwordValid = await bcrypt.compare(password, user.password);
+      console.log('Password valid:', passwordValid);
+
+      if (!passwordValid) {
+        res.status(401).send('Invalid email or password.');
+        return;
+      }
+      res.status(200).send({ message: 'Login successful!' });
+    });
+  } catch (error) {
+    res.status(500).send('Error logging in user');
+  }
+};
+
+export { signup, login };
