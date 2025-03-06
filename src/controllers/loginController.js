@@ -26,6 +26,10 @@ const login = async (req, res) => {
       const user = results[0];
       console.log('Comparing passwords:', trimmedPassword, user.password);
 
+      // Rehash the trimmed password and log it
+      const rehashedPassword = await bcrypt.hash(trimmedPassword, 10);
+      console.log('Rehashed Password:', rehashedPassword);
+
       const isPasswordValid = await bcrypt.compare(trimmedPassword, user.password);
       console.log('Password valid:', isPasswordValid);
 
