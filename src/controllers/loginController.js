@@ -22,10 +22,6 @@ const login = async (req, res) => {
       const user = results[0];
       console.log('Comparing passwords:', password, user.password);
 
-      // Re-hash the provided password for comparison
-      const hashedProvidedPassword = await bcrypt.hash(password, 10);
-      console.log('Re-hashed provided password:', hashedProvidedPassword);
-
       const isPasswordValid = await bcrypt.compare(password, user.password);
       console.log('Password valid:', isPasswordValid);
 
