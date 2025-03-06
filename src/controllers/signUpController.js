@@ -5,6 +5,8 @@ const signup = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Hashed Password from signUpController:', hashedPassword);
+
     const query = `
       INSERT INTO iitiusers (username, password, email)
       VALUES (?, ?, ?)
