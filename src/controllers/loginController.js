@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import db from '../../db.js'; // Ensure the correct path
 
@@ -6,6 +5,11 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   console.log('Email:', email);
   console.log('Password:', password);
+
+  // Trim the password to remove leading and trailing whitespace
+  const trimmedPassword = password.trim();
+  console.log('Trimmed Password:', trimmedPassword);
+
   try {
     const query = 'SELECT * FROM iitiusers WHERE email = ?';
     db.query(query, [email], async (err, results) => {
@@ -20,9 +24,9 @@ const login = async (req, res) => {
         return;
       }
       const user = results[0];
-      console.log('Comparing passwords:', password, user.password);
+      console.log('Comparing passwords:', trimmedPassword, user.password);
 
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = await bcrypt.compare(trimmedPassword, user.password);
       console.log('Password valid:', isPasswordValid);
 
       if (!isPasswordValid) {
@@ -30,10 +34,7 @@ const login = async (req, res) => {
         res.status(401).send('Password does not match for email.');
         return;
       }
-      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-        expiresIn: '1h',
-      });
-      res.status(200).send({ token });
+      res.status(200).send({ message: 'Login successful' });
     });
   } catch (error) {
     console.error('Error logging in user:', error); // Log error
