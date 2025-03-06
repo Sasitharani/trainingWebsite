@@ -20,6 +20,7 @@ const login = async (req, res) => {
         return;
       }
       const user = results[0];
+      console.log('Comparing passwords:', password, user.password);
       const isPasswordValid = await bcrypt.compare(password, user.password);
       console.log('Password valid:', isPasswordValid);
       if (!isPasswordValid) {
