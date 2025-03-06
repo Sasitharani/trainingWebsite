@@ -2,46 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 import { Link, useNavigate } from 'react-router-dom';
-import GoogleLogin from './GoogleLogin';
+import GoogleLogin from '../GoogleLogin'; // Import GoogleLogin component
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess, login, logout } from './store/userSlice'; // Import actions
-import BackgroundCircles from './components/BackgroundCircles'; // Import BackgroundCircles
+import { loginSuccess, login, logout } from '../store/userSlice'; // Import actions
 import Swal from 'sweetalert2';
-
-const fetchVotesDetails = async (username, email, dispatch) => {
-  try {
-    const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/fetchVotesDetails', {
-      username,
-      email
-    });
-    const LikesAvailable = response.data.map(vote => vote.LikesAvailable);
-    const firstLikeUsed = response.data.length > 0 ? response.data[0].LikesUsed : null;
-
-    dispatch(loginSuccess({ 
-      username, 
-      email, 
-      votesData: response.data, 
-      votesUsed: firstLikeUsed,
-      votesAvailable: LikesAvailable // Include LikesAvailable in the payload
-    })); // Save firstLikeUsed to Redux store
-  } catch (error) {
-    console.error('Error in fetchVotesDetails:', error);
-    Swal.fire('Error', error.response.data, 'error');
-  }
-};
-
-const updateVotes = async (username, email, dispatch) => {
-  try {
-    const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/updateVotes', {
-      username,
-      email
-    });
-    await fetchVotesDetails(username, email, dispatch); // Call fetchVotesDetails after updateVotes
-    //console.log('Response in updateVotes:', response.data.LikesUsed);
-  } catch (error) {
-    Swal.fire('Error', error.response.data, 'error');
-  }
-};
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -49,6 +13,7 @@ const Login = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false); // Add loading state
     const navigate = useNavigate();
+    const dispatch = useDispatch();                 
     const isLoggedIn = useSelector(state => state.user.isLoggedIn); // Get isLoggedIn from slice
 
     useEffect(() => {
@@ -61,17 +26,17 @@ const Login = () => {
         //console.log("Login form submitted");
         setLoading(true); // Set loading to true
         try {
-            const response = await axios.post('https://contest-nda5.onrender.com/api/login', { // Ensure the correct URL and port
+            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', { // Ensure the correct URL and port
                 email,
                 password
             });
             //console.log('Server response:', response.data);
             const hashedPassword = response.data.hashedPassword;
             const username = response.data.username; // Extract username from response
-            //console.log('Entered email:', email);
-            //console.log('Entered username:', username);
-            //console.log('Entered password:', password);
-            //console.log('Hashed password from server:', hashedPassword);
+            console.log('Entered email:', email);
+            console.log('Entered username:', username);
+            console.log('Entered password:', password);
+            console.log('Hashed password from server:', hashedPassword);
             const passwordIsValid = await bcrypt.compare(password, hashedPassword);
             //console.log('Password match:', passwordIsValid);
             if (passwordIsValid) {
@@ -98,7 +63,6 @@ const Login = () => {
             setLoading(false); // Set loading to false
         }
     };
-    const dispatch = useDispatch();                 
 
     const handleLogout = () => {
         //console.log('Dispatching logout action from Login.jsx');
@@ -110,7 +74,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orangePastel to-pinkPastel relative">
-            <BackgroundCircles />
+         
             {loading && (
                 <div className="absolute inset-0 bg-gray-100 bg-opacity-50 flex items-center justify-center z-50">
                     <div className="loader"></div>

@@ -14,11 +14,12 @@ export default function Header() {
         </ul>
         <div className="relative">
           <button className="bg-gray-700 px-4 py-2 rounded">Menu</button>
-          <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg">
+          <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50"> {/* Added z-50 class */}
             <Link to="/" className="block px-4 py-2">Home</Link>
             <Link to="/coding" className="block px-4 py-2">Coding Training</Link>
             <Link to="/placement" className="block px-4 py-2">Placement Training</Link>
             <Link to="/signup" className="block px-4 py-2">Sign Up</Link>
+            <Link to="/login" className="block px-4 py-2">Login</Link> {/* Added Login link */}
           </div>
         </div>
       </nav>
