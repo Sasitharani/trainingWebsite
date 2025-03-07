@@ -30,27 +30,24 @@ const Login = () => {
                 email,
                 password
             });
+            const { message, hashedPassword, username } = response.data; // Extract message, hashedPassword, and username from response
+            if (message === 'Login successful') {
+                console.log("Login successful inside loop");
+                setMessage('Login Successfully');
+                dispatch(login({ email, username })); // Dispatch login success with email and username
+                localStorage.setItem('user', JSON.stringify({ email })); // Update local storage
+                navigate('/user-profile'); // Redirect to UserProfile page
+            } else {
+                setMessage('Password did not match.');
+            }
+        }  catch (error) {
             //console.log('Server response:', response.data);
             const hashedPassword = response.data.hashedPassword;
             const username = response.data.username; // Extract username from response
             console.log('Entered email:', email);
             console.log('Entered username:', username);
             console.log('Entered password:', password);
-            console.log('Hashed password from server:', hashedPassword);
-            const passwordIsValid = await bcrypt.compare(password, hashedPassword);
-            //console.log('Password match:', passwordIsValid);
-            if (passwordIsValid) {
-                //console.log('Email & Username', email, username);
-                setMessage('Login Successfully');
-                
-                dispatch(login({ email, username })); // Dispatch login success with email and username
-                localStorage.setItem('user', JSON.stringify({ email })); // Update local storage
-                //await updateVotes(username, email, dispatch); // Call updateVotes after login
-                navigate('/user-profile'); // Redirect to UserProfile page
-            } else {
-                setMessage('Password did not match.');
-            }
-        } catch (error) {
+            console.log('Hashed password from server:', hashedPassword);        
             console.error('Error during login:', error);
             if (error.response && error.response.data && error.response.data.message) {
                 setMessage(`Login failed: ${error.response.data.message}`);
@@ -71,6 +68,8 @@ const Login = () => {
         localStorage.removeItem('lastSpinTime'); // Reset last spin time
         navigate('/login');
     };
+
+    const user = JSON.parse(localStorage.getItem('user'));
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orangePastel to-pinkPastel relative">
@@ -135,6 +134,11 @@ const Login = () => {
                     </Link>
                 </form>
                 {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+                {user ? (
+                    <button onClick={handleLogout}>Logout</button>
+                ) : (
+                    <button onClick={() => navigate('/login')}>Login</button>
+                )}
             </div>
         </div>
     );

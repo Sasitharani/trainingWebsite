@@ -34,7 +34,7 @@ const GoogleLoginPage = () => {
                     icon: 'success',
                     confirmButtonText: 'Continue',
                     preConfirm: () => {
-                        navigate('/user');
+                        navigate('/user-profile'); // Redirect to UserProfile
                     }
                 });
             } else {
