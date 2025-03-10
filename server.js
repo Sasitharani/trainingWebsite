@@ -89,23 +89,13 @@ const logMiddleware = (req, res, next) => {
 app.use(logMiddleware);
 
 // Use the imported routes
-app.use('/api', deleteImageRoute);
-app.use('/api', getAllImagesRoute);
 app.use('/api', loginRoute);
 app.use('/api', googleLoginRoute); // Ensure the correct route
 app.use('/api', signupRoute);
 app.use('/api', checkEmailAvailabilityRoute);
-app.use('/api', fileUploadSendEmailRoute);
 app.use('/api', passwordResetRoute);
 app.use('/api', hashThePasswordRoute);
 app.use('/api', comparePasswordRoute);
-app.use('/api', imgForVote1Route);
-app.use('/api', getImagesInVote1PageRoute);
-app.use('/api', voteForVote1Route);
-
-app.use('/api', fetchVotesDetailsRoute);
-app.use('/api', updateVotesRoute);
-app.use('/api', spinWheelRoute); // Add this line
 app.use('/api', logsRoute); // Use the logs route
 
 app.use((err, req, res, next) => {
