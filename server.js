@@ -4,22 +4,13 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import moment from 'moment-timezone'; // Import moment-timezone
 import db from './src/db.js'; // Import the connection pool
-import deleteImageRoute from './src/routes/deleteImageRoute.js'; // Import deleteImageRoute
-import getAllImagesRoute from './src/routes/getAllImagesRoute.js'; // Import getAllImagesRoute
 import loginRoute from './src/routes/loginRoute.js'; // Import loginRoute
 import googleLoginRoute from './src/routes/googleLoginRoute.js'; // Ensure the correct path
 import signupRoute from './src/routes/signupRoute.js'; // Import signupRoute
 import checkEmailAvailabilityRoute from './src/routes/checkEmailAvailabilityRoute.js'; // Import checkEmailAvailabilityRoute
-import fileUploadSendEmailRoute from './src/routes/fileUploadSendEmailRoute.js'; // Import fileUploadSendEmailRoute
 import passwordResetRoute from './src/routes/passwordResetRoute.js'; // Import passwordResetRoute
 import hashThePasswordRoute from './src/routes/hashThePasswordRoute.js'; // Import hashThePasswordRoute
 import comparePasswordRoute from './src/routes/comparePaswswordRoute.js'; // Import comparePasswordRoute
-import imgForVote1Route from './src/routes/imgForVote1Route.js'; // Import imgForVote1Route
-import getImagesInVote1PageRoute from './src/routes/getImagesInVote1PageRoute.js'; // Import getImagesInVote1PageRoute
-import voteForVote1Route from './src/routes/voteForVote1Route.js'; // Import voteForVote1Route
-import fetchVotesDetailsRoute from './src/routes/fetchVotesDetailsRoute.js'; // Import fetchVotesDetailsRoute
-import updateVotesRoute from './src/routes/updateVotesRoutes.js'; // Import updateVotesRoute
-import spinWheelRoute from './src/routes/spinWheelRoute.js'; // Correct the file extension to .jsx
 import logsRoute from './src/routes/logsRoute.js'; // Import logsRoute
 
 dotenv.config();
