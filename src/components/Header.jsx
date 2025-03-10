@@ -15,6 +15,7 @@ export default function Header() {
           <li><Link to="/coding" className="hover:text-gray-400">Coding Training</Link></li>
           <li><Link to="/placement" className="hover:text-gray-400">Placement Training</Link></li>
           <li><Link to="/signup" className="hover:text-gray-400">Sign Up</Link></li>
+          <li><Link to="/palette" className="hover:text-gray-400">Palette</Link></li>
           {isLoggedIn ? (
             <li className="hover:text-gray-400">{email.slice(0, email.indexOf('@'))}</li>
           ) : (
