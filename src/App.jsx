@@ -9,6 +9,7 @@ import Signup from './components/Signup';
 import Login from './components/Login'; // Import Login component
 import UserProfile from './components/UserProfile'; // Import UserProfile component
 import Palette from './components/Palette'; // Import Palette component
+import LogoAnimation from './components/LogoAnimation';
 
 import './App.css';
 import './tailwind.css';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/login" element={<Login />} /> {/* Added Login route */}
           <Route path="/user-profile" element={<UserProfile />} /> {/* Added UserProfile route */}
           <Route path="/palette" element={<Palette />} /> {/* Added Palette route */}
+          <Route path="/logo-animation" element={<LogoAnimation />} />
           <Route path="/html" element={<HTML />} />
           <Route path="/css" element={<CSS />} />
           <Route path="/tailwindcss" element={<TailwindCss />} />

@@ -14,13 +14,13 @@ export default function Front() {
   ];
 
   return (
-      <div className="h-screen w-screen flex">
+      <div className="h-screen w-screen flex bg-black">
           {/* Left side */}
           <div className="w-1/4 bg-pink-300 flex flex-col justify-center items-center">
               <img src={bgImage} alt="Background" className="w-full h-full object-cover" />
           </div>
           {/* Right side */}
-          <div className="w-3/4 bg-pink-500">
+          <div className="w-3/4 bg-black-500">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
                   {tiles.map((tile, index) => (
                       <div
