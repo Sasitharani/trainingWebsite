@@ -7,6 +7,7 @@ import db from '../db.js';
  */
 export const uploadQuizController = async (req, res) => {
   const quizzes = req.body;
+  console.log('API /upload-quiz hit', quizzes); // Log the received quizzes
   const email = 'sasitharani@gmail.com'; // Hardcoded email for now
 
   try {
