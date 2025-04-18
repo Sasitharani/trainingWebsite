@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 
 // Use quizRoutes for all quiz-related endpoints
 app.use('/api', quizRoutes);
+app.use('/api', getquizzesRoute);
 
 
 app.listen(PORT, () => {
