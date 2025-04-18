@@ -11,7 +11,7 @@ export default function AdminQuizPage() {
   }, []);
   const test = async () => {
     try {
-      const response = await axios.get('http://localhost:3004/api/test');
+      const response = await axios.get('https://trainingwebsite-apot.onrender.com/api/test');
       setQuizzes(response.data);
     } catch (error) {
       console.error('Error fetching quizzes:', error);
@@ -20,7 +20,7 @@ export default function AdminQuizPage() {
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get('http://localhost:3004/api/get-quizzes');
+      const response = await axios.get('https://trainingwebsite-apot.onrender.com/api/get-quizzes');
       setQuizzes(response.data);
     } catch (error) {
       console.error('Error fetching quizzes:', error);
@@ -64,7 +64,7 @@ export default function AdminQuizPage() {
       });
 
       // Send parsed questions to the backend using Axios
-      await axios.post('http://localhost:3004/api/upload-quiz', questions);
+      await axios.post('https://trainingwebsite-apot.onrender.com/api/upload-quiz', questions);
       console.log('Questions uploaded successfully:', questions);
       alert('Quizzes uploaded successfully!');
       setBulkInput('');
@@ -76,7 +76,7 @@ export default function AdminQuizPage() {
 
   const handleDelete = async () => {
     try {
-      await axios.post('http://localhost:3004/api/delete-quizzes', { ids: selectedQuizzes });
+      await axios.post('https://trainingwebsite-apot.onrender.com/api/delete-quizzes', { ids: selectedQuizzes });
       alert('Selected quizzes deleted successfully!');
       fetchQuizzes();
     } catch (error) {
@@ -86,7 +86,7 @@ export default function AdminQuizPage() {
 
   const handleEdit = async (id, updatedQuiz) => {
     try {
-      await axios.put(`http://localhost:3004/api/edit-quiz/${id}`, updatedQuiz);
+      await axios.put(`https://trainingwebsite-apot.onrender.com/api/edit-quiz/${id}`, updatedQuiz);
       alert('Quiz updated successfully!');
       fetchQuizzes();
     } catch (error) {
