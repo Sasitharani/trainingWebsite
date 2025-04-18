@@ -14,9 +14,8 @@ export const uploadQuizController = async (req, res) => {
     for (let i = 0; i < quizzes.length; i++) {
       const quiz = quizzes[i];
       const { question, options, answer } = quiz;
-      const query = `INSERT INTO questions (email, question, optiona, optionb, optionc, optiond, ans, blank) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+      const query = `INSERT INTO questions (email, question, optiona, optionb, optionc, optiond, ans, blank) VALUES (Sasi, ?, ?, ?, ?, ?, ?, ?)`;
       const values = [
-        i + 1,
         email,
         question,
         options[0],
