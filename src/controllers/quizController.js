@@ -5,32 +5,43 @@ import db from '../db.js';
  * @param {Object} req - The request object containing quiz data.
  * @param {Object} res - The response object to send back the result.
  */
-export const uploadQuizController = (req, res) => {
+export const uploadQuizController = async (req, res) => {
   const quizzes = req.body;
   const email = 'sasitharani@gmail.com'; // Hardcoded email for now
 
-  quizzes.forEach((quiz, index) => {
-    const { question, options, answer } = quiz;
-    const query = `INSERT INTO questions (Sr_No, email, question, optiona, optionb, optionc, optiond, ans, blank) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [
-      index + 1,
-      email,
-      question,
-      options[0],
-      options[1],
-      options[2],
-      options[3],
-      answer,
-      '',
-    ];
+  try {
+    // Use Promise.all to ensure all queries are completed before sending a response
+    await Promise.all(
+      quizzes.map((quiz, index) => {
+        const { question, options, answer } = quiz;
+        const query = `INSERT INTO questions (Sr_No, email, question, optiona, optionb, optionc, optiond, ans, blank) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const values = [
+          index + 1,
+          email,
+          question,
+          options[0],
+          options[1],
+          options[2],
+          options[3],
+          answer,
+          '',
+        ];
 
-    db.query(query, values, (err) => {
-      if (err) {
-        console.error('Error inserting quiz:', err);
-        return res.status(500).send('Failed to upload quizzes.');
-      }
-    });
-  });
+        return new Promise((resolve, reject) => {
+          db.query(query, values, (err) => {
+            if (err) {
+              console.error('Error inserting quiz:', err);
+              return reject(err);
+            }
+            resolve();
+          });
+        });
+      })
+    );
 
-  res.status(200).send('Quizzes uploaded successfully!');
+    res.status(200).send('Quizzes uploaded successfully!');
+  } catch (error) {
+    console.error('Error uploading quizzes:', error);
+    res.status(500).send('Failed to upload quizzes.');
+  }
 };
