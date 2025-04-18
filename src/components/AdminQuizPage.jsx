@@ -41,7 +41,7 @@ export default function AdminQuizPage() {
       });
 
       // Send parsed questions to the backend using Axios
-      await axios.post('http://localhost:3004/api/upload-quiz', questions);
+      await axios.post('https://newtrainingwebsite.onrender.com/api/upload-quiz', questions);
       alert('Quizzes uploaded successfully!');
       setBulkInput('');
     } catch (error) {
