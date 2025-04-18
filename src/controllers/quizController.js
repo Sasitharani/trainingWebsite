@@ -43,21 +43,24 @@ export const uploadQuizController = async (req, res) => {
     res.status(500).send('Failed to upload quizzes.');
   }
 };
+export const test = async (req, res) => {
+    console.log('Step 1: API /test hit'); // Log when the API is hit
 
+}
 export const fetchQuizzesController = async (req, res) => {
   try {
-    console.log('API /get-quizzes hit'); // Log when the API is hit
+    console.log('Step 1: API /get-quizzes hit'); // Log when the API is hit
     const query = 'SELECT * FROM questions';
     db.query(query, (err, results) => {
       if (err) {
-        console.error('Error fetching quizzes:', err);
+        console.error('Step 2: Error fetching quizzes:', err);
         return res.status(500).send('Failed to fetch quizzes.');
       }
-      console.log('Fetched quizzes:', results); // Log the fetched quizzes
+      console.log('Step 2: Fetched quizzes:', results); // Log the fetched quizzes
       res.status(200).json(results);
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Step 2: Error:', error);
     res.status(500).send('An error occurred while fetching quizzes.');
   }
 };

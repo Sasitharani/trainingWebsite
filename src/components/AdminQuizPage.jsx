@@ -9,10 +9,18 @@ export default function AdminQuizPage() {
   useEffect(() => {
     fetchQuizzes();
   }, []);
+  const test = async () => {
+    try {
+      const response = await axios.get('http://localhost:3004/api/test');
+      setQuizzes(response.data);
+    } catch (error) {
+      console.error('Error fetching quizzes:', error);
+    }
+  };
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get('https://newtrainingwebsite.onrender.com/api/get-quizzes');
+      const response = await axios.get('http://localhost:3004/api/get-quizzes');
       setQuizzes(response.data);
     } catch (error) {
       console.error('Error fetching quizzes:', error);
@@ -56,7 +64,7 @@ export default function AdminQuizPage() {
       });
 
       // Send parsed questions to the backend using Axios
-      await axios.post('https://newtrainingwebsite.onrender.com/api/upload-quiz', questions);
+      await axios.post('http://localhost:3004/api/upload-quiz', questions);
       console.log('Questions uploaded successfully:', questions);
       alert('Quizzes uploaded successfully!');
       setBulkInput('');
@@ -68,7 +76,7 @@ export default function AdminQuizPage() {
 
   const handleDelete = async () => {
     try {
-      await axios.post('https://newtrainingwebsite.onrender.com/api/delete-quizzes', { ids: selectedQuizzes });
+      await axios.post('http://localhost:3004/api/delete-quizzes', { ids: selectedQuizzes });
       alert('Selected quizzes deleted successfully!');
       fetchQuizzes();
     } catch (error) {
@@ -78,7 +86,7 @@ export default function AdminQuizPage() {
 
   const handleEdit = async (id, updatedQuiz) => {
     try {
-      await axios.put(`https://newtrainingwebsite.onrender.com/api/edit-quiz/${id}`, updatedQuiz);
+      await axios.put(`http://localhost:3004/api/edit-quiz/${id}`, updatedQuiz);
       alert('Quiz updated successfully!');
       fetchQuizzes();
     } catch (error) {
@@ -95,6 +103,12 @@ export default function AdminQuizPage() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Quiz Page</h1>
+      <button
+        onClick={test}
+        className="bg-green-500 text-white px-4 py-2 mb-4"
+      >
+        Run Test API
+      </button>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2">Paste Questions, Options, and Answers:</label>
