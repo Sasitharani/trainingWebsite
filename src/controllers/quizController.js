@@ -46,12 +46,14 @@ export const uploadQuizController = async (req, res) => {
 
 export const fetchQuizzesController = async (req, res) => {
   try {
+    console.log('API /get-quizzes hit'); // Log when the API is hit
     const query = 'SELECT * FROM questions';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching quizzes:', err);
         return res.status(500).send('Failed to fetch quizzes.');
       }
+      console.log('Fetched quizzes:', results); // Log the fetched quizzes
       res.status(200).json(results);
     });
   } catch (error) {
