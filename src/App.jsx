@@ -6,10 +6,11 @@ import Header from './components/Header';
 import CodingTraining from './components/CodingTraining';
 import PlacementTraining from './components/PlacementTraining';
 import Signup from './components/Signup';
-import Login from './components/Login'; // Import Login component
+import Login from './components/LoginPage'; // Import Login component
 import UserProfile from './components/UserProfile'; // Import UserProfile component
 import Palette from './components/Palette'; // Import Palette component
 import LogoAnimation from './components/LogoAnimation';
+import AdminQuizPage from './components/AdminQuizPage';
 
 import './App.css';
 import './tailwind.css';
@@ -45,6 +46,7 @@ function App() {
           <Route path="/aptitude" element={<Aptitude />} />
           <Route path="/groupdiscussion" element={<GroupDiscussion />} />
           <Route path="/facetofaceinterview" element={<FaceToFaceInterview />} />
+          <Route path="/admin-quiz" element={<AdminQuizPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

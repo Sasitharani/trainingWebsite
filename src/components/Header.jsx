@@ -1,10 +1,19 @@
 import 'tailwindcss/tailwind.css';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Header() {
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const email = useSelector(state => state.user.email);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.email === 'sasitharani@gmail.com') {
+      setIsAdmin(true);
+    }
+  }, []);
 
   return (
     <header className="bg-black text-white p-4">
@@ -22,10 +31,11 @@ export default function Header() {
           <li><Link to="/placement" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Placement Training</Link></li>
           <li><Link to="/signup" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Sign Up</Link></li>
           <li><Link to="/logo-animation" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Test Page</Link></li>
+          {isAdmin && <li><Link to="/admin-quiz" className="hover:text-gray-400">Admin Quiz</Link></li>}
           {isLoggedIn ? (
             <li className="hover:text-gray-400">{email.slice(0, email.indexOf('@'))}</li>
           ) : (
-            <li><Link to="/login" className="hover:text-gray-400">Login</Link></li>
+            <li><Link to="/login" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Login</Link></li>
           )}
         </ul>
       </nav>
