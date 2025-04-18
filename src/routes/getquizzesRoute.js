@@ -1,12 +1,10 @@
 import express from 'express';
-import { uploadQuizController,fetchQuizzesController } from '../controllers/quizController.js';
+import {fetchQuizzesController } from '../controllers/quizController.js';
 
 const router = express.Router();
 
 let quizzes = []; // Temporary in-memory storage for quizzes
 
-// Route to upload a quiz
-router.post('/upload-quiz', uploadQuizController);
 router.post('/get-quizzes', fetchQuizzesController);
 
 
