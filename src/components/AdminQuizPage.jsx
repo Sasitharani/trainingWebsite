@@ -22,6 +22,7 @@ export default function AdminQuizPage() {
     try {
       const response = await axios.get('https://trainingwebsite-apot.onrender.com/api/get-quizzes');
       setQuizzes(response.data);
+      console.log('Fetched quizzes:', response.data); // Log the fetched quizzes
     } catch (error) {
       console.error('Error fetching quizzes:', error);
     }
@@ -95,79 +96,85 @@ export default function AdminQuizPage() {
   };
 
   const handleCheckboxChange = (id) => {
-    setSelectedQuizzes((prev) =>
-      prev.includes(id) ? prev.filter((quizId) => quizId !== id) : [...prev, id]
-    );
+    setSelectedQuizzes((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((quizId) => quizId !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
   };
 
-  return (
+console.log('Current quizzes:', quizzes); // Log the quizzes state
+
+return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Admin Quiz Page</h1>
-      <button
-        onClick={test}
-        className="bg-green-500 text-white px-4 py-2 mb-4"
-      >
-        Run Test API
-      </button>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block mb-2">Paste Questions, Options, and Answers:</label>
-          <textarea
-            value={bulkInput}
-            onChange={handleBulkInputChange}
-            rows="10"
-            className="border p-2 w-full"
-            placeholder="Paste questions in the specified format here..."
-          ></textarea>
-        </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">Upload Quizzes</button>
-      </form>
+        <h1 className="text-2xl font-bold mb-4">Admin Quiz Page</h1>
+        <button
+            onClick={test}
+            className="bg-green-500 text-white px-4 py-2 mb-4"
+        >
+            Run Test API
+        </button>
+        <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+                <label className="block mb-2">Paste Questions, Options, and Answers:</label>
+                <textarea
+                    value={bulkInput}
+                    onChange={handleBulkInputChange}
+                    rows="10"
+                    className="border p-2 w-full"
+                    placeholder="Paste questions in the specified format here..."
+                ></textarea>
+            </div>
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2">Upload Quizzes</button>
+        </form>
 
-      <h2 className="text-xl font-bold mt-8 mb-4">View Quizzes</h2>
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 p-2">Select</th>
-            <th className="border border-gray-300 p-2">Question</th>
-            <th className="border border-gray-300 p-2">Options</th>
-            <th className="border border-gray-300 p-2">Answer</th>
-            <th className="border border-gray-300 p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {quizzes.map((quiz) => (
-            <tr key={quiz.id}>
-              <td className="border border-gray-300 p-2">
-                <input
-                  type="checkbox"
-                  checked={selectedQuizzes.includes(quiz.id)}
-                  onChange={() => handleCheckboxChange(quiz.id)}
-                />
-              </td>
-              <td className="border border-gray-300 p-2">{quiz.question}</td>
-              <td className="border border-gray-300 p-2">
-                {quiz.options.join(', ')}
-              </td>
-              <td className="border border-gray-300 p-2">{quiz.answer}</td>
-              <td className="border border-gray-300 p-2">
-                <button
-                  onClick={() => handleEdit(quiz.id, { question: 'Updated Question', options: quiz.options, answer: quiz.answer })}
-                  className="bg-yellow-500 text-white px-2 py-1 mr-2"
-                >
-                  Edit
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <h2 className="text-xl font-bold mt-8 mb-4">View Quizzes</h2>
+        <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead>
+                <tr>
+                    <th className="border border-gray-300 p-2">Select</th>
+                    <th className="border border-gray-300 p-2">Question</th>
+                    <th className="border border-gray-300 p-2">Options</th>
+                    <th className="border border-gray-300 p-2">Answer</th>
+                    <th className="border border-gray-300 p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {quizzes.map((quiz) => (
+                    <tr key={quiz.id}>
+                        <td className="border border-gray-300 p-2">
+                            <input
+                                type="checkbox"
+                                checked={selectedQuizzes.includes(quiz.id)}
+                                onChange={() => handleCheckboxChange(quiz.id)}
+                            />
+                        </td>
+                        <td className="border border-gray-300 p-2">{quiz.question}</td>
+                        <td className="border border-gray-300 p-2">
+                            {Array.isArray(quiz.options) ? quiz.options.join(', ') : 'No options available'}
+                        </td>
+                        <td className="border border-gray-300 p-2">{quiz.answer}</td>
+                        <td className="border border-gray-300 p-2">
+                            <button
+                                onClick={() => handleEdit(quiz.id, { question: 'Updated Question', options: quiz.options, answer: quiz.answer })}
+                                className="bg-yellow-500 text-white px-2 py-1 mr-2"
+                            >
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
 
-      <button
-        onClick={handleDelete}
-        className="bg-red-500 text-white px-4 py-2 mt-4"
-      >
-        Delete Selected
-      </button>
+        <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-2 mt-4"
+        >
+            Delete Selected
+        </button>
     </div>
-  );
+);
 }
