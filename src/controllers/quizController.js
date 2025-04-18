@@ -43,3 +43,66 @@ export const uploadQuizController = async (req, res) => {
     res.status(500).send('Failed to upload quizzes.');
   }
 };
+
+export const fetchQuizzesController = async (req, res) => {
+  try {
+    const query = 'SELECT * FROM questions';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching quizzes:', err);
+        return res.status(500).send('Failed to fetch quizzes.');
+      }
+      res.status(200).json(results);
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('An error occurred while fetching quizzes.');
+  }
+};
+
+export const editQuizController = async (req, res) => {
+  const { id } = req.params;
+  const { question, options, answer } = req.body;
+
+  try {
+    const query = `UPDATE questions SET question = ?, optiona = ?, optionb = ?, optionc = ?, optiond = ?, ans = ? WHERE Sr_No = ?`;
+    const values = [
+      question,
+      options[0],
+      options[1],
+      options[2],
+      options[3],
+      answer,
+      id,
+    ];
+
+    db.query(query, values, (err) => {
+      if (err) {
+        console.error('Error editing quiz:', err);
+        return res.status(500).send('Failed to edit quiz.');
+      }
+      res.status(200).send('Quiz updated successfully!');
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('An error occurred while editing the quiz.');
+  }
+};
+
+export const deleteQuizzesController = async (req, res) => {
+  const { ids } = req.body;
+
+  try {
+    const query = `DELETE FROM questions WHERE Sr_No IN (?)`;
+    db.query(query, [ids], (err) => {
+      if (err) {
+        console.error('Error deleting quizzes:', err);
+        return res.status(500).send('Failed to delete quizzes.');
+      }
+      res.status(200).send('Quizzes deleted successfully!');
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('An error occurred while deleting quizzes.');
+  }
+};
