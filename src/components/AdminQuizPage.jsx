@@ -42,6 +42,7 @@ export default function AdminQuizPage() {
 
       // Send parsed questions to the backend using Axios
       await axios.post('https://newtrainingwebsite.onrender.com/api/upload-quiz', questions);
+      console.log('Questions uploaded successfully:', questions);
       alert('Quizzes uploaded successfully!');
       setBulkInput('');
     } catch (error) {
