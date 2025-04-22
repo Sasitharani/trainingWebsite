@@ -96,12 +96,13 @@ export default function AdminQuizPage() {
   };
 
   const handleCheckboxChange = (id) => {
-    setSelectedQuizzes((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((quizId) => quizId !== id);
-      } else {
-        return [...prev, id];
-      }
+    console.log('Checkbox ID:', id); // Debugging log to check the ID
+    setSelectedQuizzes((prevSelected) => {
+      const updatedSelection = prevSelected.includes(id)
+        ? prevSelected.filter((quizId) => quizId !== id) // Remove if already selected
+        : [...prevSelected, id]; // Add if not selected
+      console.log('Updated selectedQuizzes:', updatedSelection); // Debugging log
+      return updatedSelection;
     });
   };
 
@@ -142,23 +143,23 @@ return (
                 </tr>
             </thead>
             <tbody>
-                {quizzes.map((quiz) => (
-                    <tr key={quiz.id}>
+                {quizzes.map((quiz, index) => (
+                    <tr key={quiz.id || `quiz-${index}`}>
                         <td className="border border-gray-300 p-2">
                             <input
                                 type="checkbox"
-                                checked={selectedQuizzes.includes(quiz.id)}
-                                onChange={() => handleCheckboxChange(quiz.id)}
+                                checked={selectedQuizzes.includes(quiz.id || `quiz-${index}`)}
+                                onChange={() => handleCheckboxChange(quiz.id || `quiz-${index}`)}
                             />
                         </td>
-                        <td className="border border-gray-300 p-2">{quiz.question}</td>
+                        <td className="border border-gray-300 p-2">{quiz.question || 'No question available'}</td>
                         <td className="border border-gray-300 p-2">
                             {Array.isArray(quiz.options) ? quiz.options.join(', ') : 'No options available'}
                         </td>
-                        <td className="border border-gray-300 p-2">{quiz.answer}</td>
+                        <td className="border border-gray-300 p-2">{quiz.answer || 'No answer available'}</td>
                         <td className="border border-gray-300 p-2">
                             <button
-                                onClick={() => handleEdit(quiz.id, { question: 'Updated Question', options: quiz.options, answer: quiz.answer })}
+                                onClick={() => handleEdit(quiz.id || `quiz-${index}`, { question: 'Updated Question', options: quiz.options, answer: quiz.answer })}
                                 className="bg-yellow-500 text-white px-2 py-1 mr-2"
                             >
                                 Edit

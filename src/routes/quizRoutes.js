@@ -1,5 +1,5 @@
 import express from 'express';
-import { uploadQuizController,fetchQuizzesController,test } from '../controllers/quizController.js';
+import { uploadQuizController, fetchQuizzesController, test, editQuizController, deleteQuizzesController } from '../controllers/quizController.js';
 
 const router = express.Router();
 
@@ -9,6 +9,12 @@ const router = express.Router();
 router.post('/upload-quiz', uploadQuizController);
 router.get('/get-quizzes', fetchQuizzesController);
 router.get('/test', test);
+
+// Route to edit a quiz
+router.put('/edit-quiz/:id', editQuizController);
+
+// Route to delete quizzes
+router.post('/delete-quizzes', deleteQuizzesController);
 
 
 
