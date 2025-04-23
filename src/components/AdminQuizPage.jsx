@@ -89,7 +89,8 @@ export default function AdminQuizPage() {
 
   const handleDeleteSingle = async (id) => {
     try {
-      const numericId = id.replace('quiz-', ''); // Remove the 'quiz-' prefix
+      console.log('ID received in handleDeleteSingle:', id, 'Type:', typeof id); // Debugging log
+      const numericId = typeof id === 'string' ? id.replace('quiz-', '') : id; // Handle non-string IDs
       await axios.delete(`https://trainingwebsite-apot.onrender.com/api/delete-quiz/${numericId}`);
       alert('Quiz deleted successfully!');
       fetchQuizzes(); // Refresh the quizzes list

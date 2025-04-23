@@ -113,7 +113,8 @@ export const deleteQuizController = async (req, res) => {
         console.error('Error deleting quiz:', err);
         return res.status(500).send('Failed to delete quiz.');
       }
-      res.status(200).send('Quiz deleted successfully!');
+      console.log('ID received in controller:', id); // Debugging log to check the ID received
+      res.status(200).send(`ID received in controller: ${id}`); // Send the ID back to the browser for debugging
     });
   } catch (error) {
     console.error('Error:', error);
