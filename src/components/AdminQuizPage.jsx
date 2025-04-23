@@ -5,6 +5,8 @@ export default function AdminQuizPage() {
   const [bulkInput, setBulkInput] = useState('');
   const [quizzes, setQuizzes] = useState([]);
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
+  const [editingQuizId, setEditingQuizId] = useState(null);
+  const [editedQuiz, setEditedQuiz] = useState({ question: '', options: ['', '', '', ''], answer: '' });
 
   useEffect(() => {
     fetchQuizzes();
@@ -99,14 +101,36 @@ export default function AdminQuizPage() {
     }
   };
 
-  const handleEdit = async (id, updatedQuiz) => {
+  const handleEditClick = (quiz) => {
+    setEditingQuizId(quiz.id);
+    setEditedQuiz({
+      question: quiz.question,
+      options: quiz.options,
+      answer: quiz.answer,
+    });
+  };
+
+  const handleSaveClick = async () => {
     try {
-      await axios.put(`https://trainingwebsite-apot.onrender.com/api/edit-quiz/${id}`, updatedQuiz);
+      await axios.put(`https://trainingwebsite-apot.onrender.com/api/edit-quiz/${editingQuizId}`, editedQuiz);
       alert('Quiz updated successfully!');
-      fetchQuizzes();
+      setEditingQuizId(null);
+      fetchQuizzes(); // Refresh the quizzes list
     } catch (error) {
-      console.error('Error editing quiz:', error);
+      console.error('Error saving quiz:', error);
     }
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditedQuiz((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleOptionChange = (index, value) => {
+    setEditedQuiz((prev) => {
+      const updatedOptions = [...prev.options];
+      updatedOptions[index] = value;
+      return { ...prev, options: updatedOptions };
+    });
   };
 
   const handleCheckboxChange = (id) => {
@@ -121,9 +145,9 @@ export default function AdminQuizPage() {
     });
   };
 
-console.log('Current quizzes:', quizzes); // Log the quizzes state
+  console.log('Current quizzes:', quizzes); // Log the quizzes state
 
-return (
+  return (
     <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Admin Quiz Page</h1>
         <button
@@ -169,34 +193,61 @@ return (
             </tr>
             </thead>
             <tbody>
-                {quizzes.map((quiz, index) => (
-                    <tr key={quiz.id || `quiz-${index}`}>
-                        <td className="border border-gray-300 p-2">
-                            <input
-                                type="checkbox"
-                                checked={selectedQuizzes.includes(quiz.id || `quiz-${index}`)}
-                                onChange={() => handleCheckboxChange(quiz.id || `quiz-${index}`)}
-                            />
-                        </td>
-                        <td className="border border-gray-300 p-2">{quiz.question || 'No question available'}</td>
-                        <td className="border border-gray-300 p-2">
-                            {Array.isArray(quiz.options) ? quiz.options.join(', ') : 'No options available'}
-                        </td>
-                        <td className="border border-gray-300 p-2">{quiz.answer || 'No answer available'}</td>
-                        <td className="border border-gray-300 p-2">
-                            <button
-                                onClick={() => handleEdit(quiz.id || `quiz-${index}`, { question: 'Updated Question', options: quiz.options, answer: quiz.answer })}
-                                className="bg-yellow-500 text-white px-2 py-1 mr-2"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                onClick={() => handleDeleteSingle(quiz.id || `quiz-${index}`)}
-                                className="bg-red-500 text-white px-2 py-1"
-                            >
-                                Delete
-                            </button>
-                        </td>
+                {quizzes.map((quiz) => (
+                    <tr key={quiz.id}>
+                        {editingQuizId === quiz.id ? (
+                            <>
+                                <td className="border border-gray-300 p-2">
+                                    <input
+                                        type="text"
+                                        value={editedQuiz.question}
+                                        onChange={(e) => handleInputChange('question', e.target.value)}
+                                        className="border p-1 w-full"
+                                    />
+                                </td>
+                                <td className="border border-gray-300 p-2">
+                                    {editedQuiz.options.map((option, index) => (
+                                        <input
+                                            key={index}
+                                            type="text"
+                                            value={option}
+                                            onChange={(e) => handleOptionChange(index, e.target.value)}
+                                            className="border p-1 w-full mb-1"
+                                        />
+                                    ))}
+                                </td>
+                                <td className="border border-gray-300 p-2">
+                                    <input
+                                        type="text"
+                                        value={editedQuiz.answer}
+                                        onChange={(e) => handleInputChange('answer', e.target.value)}
+                                        className="border p-1 w-full"
+                                    />
+                                </td>
+                                <td className="border border-gray-300 p-2">
+                                    <button
+                                        onClick={handleSaveClick}
+                                        className="bg-green-500 text-white px-2 py-1"
+                                    >
+                                        Save
+                                    </button>
+                                </td>
+                            </>
+                        ) : (
+                            <>
+                                <td className="border border-gray-300 p-2">{quiz.question}</td>
+                                <td className="border border-gray-300 p-2">{quiz.options.join(', ')}</td>
+                                <td className="border border-gray-300 p-2">{quiz.answer}</td>
+                                <td className="border border-gray-300 p-2">
+                                    <button
+                                        onClick={() => handleEditClick(quiz)}
+                                        className="bg-yellow-500 text-white px-2 py-1"
+                                    >
+                                        Edit
+                                    </button>
+                                </td>
+                            </>
+                        )}
                     </tr>
                 ))}
             </tbody>
