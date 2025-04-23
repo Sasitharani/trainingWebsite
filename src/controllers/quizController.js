@@ -111,3 +111,5 @@ export const deleteQuizController = async (req, res) => {
     res.status(500).send('An error occurred while deleting the quiz.');
   }
 };
+
+export { deleteQuizzesController };
