@@ -77,11 +77,23 @@ export default function AdminQuizPage() {
 
   const handleDelete = async () => {
     try {
-      await axios.post('https://trainingwebsite-apot.onrender.com/api/delete-quizzes', { ids: selectedQuizzes });
+      console.log('Attempting to delete quizzes with IDs:', selectedQuizzes); // Debugging log
+      const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/delete-quizzes', { ids: selectedQuizzes });
+      console.log('Delete response:', response.data); // Debugging log
       alert('Selected quizzes deleted successfully!');
-      fetchQuizzes();
+      fetchQuizzes(); // Refresh the quizzes list
     } catch (error) {
-      console.error('Error deleting quizzes:', error);
+      console.error('Error deleting quizzes:', error); // Debugging log
+    }
+  };
+
+  const handleDeleteSingle = async (id) => {
+    try {
+      await axios.delete(`https://trainingwebsite-apot.onrender.com/api/delete-quiz/${id}`);
+      alert('Quiz deleted successfully!');
+      fetchQuizzes(); // Refresh the quizzes list
+    } catch (error) {
+      console.error('Error deleting quiz:', error);
     }
   };
 
@@ -134,13 +146,24 @@ return (
         <h2 className="text-xl font-bold mt-8 mb-4">View Quizzes</h2>
         <table className="table-auto w-full border-collapse border border-gray-300">
             <thead>
-                <tr>
-                    <th className="border border-gray-300 p-2">Select</th>
-                    <th className="border border-gray-300 p-2">Question</th>
-                    <th className="border border-gray-300 p-2">Options</th>
-                    <th className="border border-gray-300 p-2">Answer</th>
-                    <th className="border border-gray-300 p-2">Actions</th>
-                </tr>
+            <tr>
+                <th className="border border-gray-300 p-2">
+                    <input
+                        type="checkbox"
+                        onChange={(e) => {
+                            if (e.target.checked) {
+                                setSelectedQuizzes(quizzes.map((quiz) => quiz.id || `quiz-${quizzes.indexOf(quiz)}`));
+                            } else {
+                                setSelectedQuizzes([]);
+                            }
+                        }}
+                    />
+                </th>
+                <th className="border border-gray-300 p-2">Question</th>
+                <th className="border border-gray-300 p-2">Options</th>
+                <th className="border border-gray-300 p-2">Answer</th>
+                <th className="border border-gray-300 p-2">Actions</th>
+            </tr>
             </thead>
             <tbody>
                 {quizzes.map((quiz, index) => (
@@ -163,6 +186,12 @@ return (
                                 className="bg-yellow-500 text-white px-2 py-1 mr-2"
                             >
                                 Edit
+                            </button>
+                            <button
+                                onClick={() => handleDeleteSingle(quiz.id || `quiz-${index}`)}
+                                className="bg-red-500 text-white px-2 py-1"
+                            >
+                                Delete
                             </button>
                         </td>
                     </tr>

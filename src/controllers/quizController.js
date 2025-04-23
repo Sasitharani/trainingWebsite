@@ -94,20 +94,20 @@ export const editQuizController = async (req, res) => {
   }
 };
 
-export const deleteQuizzesController = async (req, res) => {
-  const { ids } = req.body;
+export const deleteQuizController = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    const query = `DELETE FROM questions WHERE Sr_No IN (?)`;
-    db.query(query, [ids], (err) => {
+    const query = `DELETE FROM questions WHERE Sr_No = ?`;
+    db.query(query, [id], (err) => {
       if (err) {
-        console.error('Error deleting quizzes:', err);
-        return res.status(500).send('Failed to delete quizzes.');
+        console.error('Error deleting quiz:', err);
+        return res.status(500).send('Failed to delete quiz.');
       }
-      res.status(200).send('Quizzes deleted successfully!');
+      res.status(200).send('Quiz deleted successfully!');
     });
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).send('An error occurred while deleting quizzes.');
+    res.status(500).send('An error occurred while deleting the quiz.');
   }
 };
