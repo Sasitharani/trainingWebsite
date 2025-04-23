@@ -99,6 +99,8 @@ export const deleteQuizController = async (req, res) => {
 
   try {
     const query = `DELETE FROM questions WHERE Sr_No = ?`;
+    console.log('Delete request received for ID:', id); // Debugging log
+    console.log('Executing query:', query, 'with ID:', id); // Debugging log
     db.query(query, [id], (err) => {
       if (err) {
         console.error('Error deleting quiz:', err);
