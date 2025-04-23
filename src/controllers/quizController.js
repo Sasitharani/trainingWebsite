@@ -71,10 +71,10 @@ export const fetchQuizzesController = async (req, res) => {
   }
 };
 
-export const fetchQuizzesWithoutAnswerController = async (req, res) => {
+export const fetchQuizzesWithAnswerController = async (req, res) => {
   try {
-    console.log('API /get-quizzes-no-answer hit');
-    const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond FROM questions';
+    console.log('API /get-quizzes-with-answer hit');
+    const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond, ans FROM questions';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching quizzes:', err);
@@ -84,6 +84,7 @@ export const fetchQuizzesWithoutAnswerController = async (req, res) => {
         id: row.Sr_No,
         question: row.question,
         options: [row.optiona, row.optionb, row.optionc, row.optiond],
+        answer: row.ans, // Include the answer for temporary storage
       }));
       res.status(200).json(quizzes);
     });
