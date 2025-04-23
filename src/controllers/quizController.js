@@ -7,23 +7,20 @@ import db from '../db.js';
  */
 export const uploadQuizController = async (req, res) => {
   const quizzes = req.body;
-  console.log('API /upload-quiz hit', quizzes); // Log the received quizzes
-  const email = 'sasitharani@gmail.com'; // Hardcoded email for now
 
   try {
     for (let i = 0; i < quizzes.length; i++) {
       const quiz = quizzes[i];
-      const { question, options, answer } = quiz;
-      const query = `INSERT INTO questions (email, question, optiona, optionb, optionc, optiond, ans, blank) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+      const { question, options, answer, type } = quiz; // Include type
+      const query = `INSERT INTO questions (question, optiona, optionb, optionc, optiond, ans, type) VALUES (?, ?, ?, ?, ?, ?, ?)`;
       const values = [
-        email,
         question,
         options[0],
         options[1],
         options[2],
         options[3],
         answer,
-        '',
+        type, // Add type to the query
       ];
 
       await new Promise((resolve, reject) => {
