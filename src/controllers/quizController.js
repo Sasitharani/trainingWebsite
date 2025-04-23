@@ -50,14 +50,20 @@ export const test = async (req, res) => {
 export const fetchQuizzesController = async (req, res) => {
   try {
     console.log('Step 1: API /get-quizzes hit'); // Log when the API is hit
-    const query = 'SELECT * FROM questions';
+    const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond, ans FROM questions';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Step 2: Error fetching quizzes:', err);
         return res.status(500).send('Failed to fetch quizzes.');
       }
-      console.log('Step 2: Fetched quizzes:', results); // Log the fetched quizzes
-      res.status(200).json(results);
+      const quizzes = results.map((row) => ({
+        id: row.Sr_No,
+        question: row.question,
+        options: [row.optiona, row.optionb, row.optionc, row.optiond],
+        answer: row.ans,
+      }));
+      console.log('Step 2: Fetched quizzes:', quizzes); // Log the transformed quizzes
+      res.status(200).json(quizzes);
     });
   } catch (error) {
     console.error('Step 2: Error:', error);
