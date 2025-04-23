@@ -89,7 +89,8 @@ export default function AdminQuizPage() {
 
   const handleDeleteSingle = async (id) => {
     try {
-      await axios.delete(`https://trainingwebsite-apot.onrender.com/api/delete-quiz/${id}`);
+      const numericId = id.replace('quiz-', ''); // Remove the 'quiz-' prefix
+      await axios.delete(`https://trainingwebsite-apot.onrender.com/api/delete-quiz/${numericId}`);
       alert('Quiz deleted successfully!');
       fetchQuizzes(); // Refresh the quizzes list
     } catch (error) {
