@@ -7,6 +7,8 @@ export default function AdminQuizPage() {
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
   const [editingQuizId, setEditingQuizId] = useState(null);
   const [editedQuiz, setEditedQuiz] = useState({ question: '', options: ['', '', '', ''], answer: '' });
+  const [formatErrors, setFormatErrors] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchQuizzes();
@@ -34,6 +36,41 @@ export default function AdminQuizPage() {
     setBulkInput(e.target.value);
   };
 
+  const validateFormat = (questions) => {
+    const errors = [];
+
+    questions.forEach((question, index) => {
+      const rowErrors = { row: index + 1, yourFormat: {}, correctedFormat: {} };
+
+      if (!question.question) {
+        rowErrors.yourFormat.question = 'Missing';
+        rowErrors.correctedFormat.question = 'Provide a valid question';
+      } else {
+        rowErrors.correctedFormat.question = question.question;
+      }
+
+      if (!Array.isArray(question.options) || question.options.length !== 4) {
+        rowErrors.yourFormat.options = question.options || 'Invalid';
+        rowErrors.correctedFormat.options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+      } else {
+        rowErrors.correctedFormat.options = question.options;
+      }
+
+      if (!question.answer) {
+        rowErrors.yourFormat.answer = 'Missing';
+        rowErrors.correctedFormat.answer = 'Provide a valid answer';
+      } else {
+        rowErrors.correctedFormat.answer = question.answer;
+      }
+
+      if (Object.keys(rowErrors.yourFormat).length > 0) {
+        errors.push(rowErrors);
+      }
+    });
+
+    return errors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,25 +83,19 @@ export default function AdminQuizPage() {
       // Parse the bulk input into individual questions
       const questions = bulkInput.split('\n\n').map((block) => {
         const lines = block.split('\n');
-        if (lines.length < 6) {
-          throw new Error('Invalid format. Each question must have 4 options and an answer.');
-        }
-
-        const question = lines[0];
-        const options = lines.slice(1, 5).map((line) => {
-          const option = line.split(') ')[1];
-          if (!option) {
-            throw new Error('Invalid option format. Ensure options are labeled as a), b), c), d).');
-          }
-          return option;
-        });
-        const answer = lines[5].split('ans)')[1]?.trim();
-        if (!answer) {
-          throw new Error('Invalid answer format. Ensure the answer is labeled as ans).');
-        }
-
-        return { question, options, answer };
+        return {
+          question: lines[0],
+          options: lines.slice(1, 5).map((line) => line.split(') ')[1]),
+          answer: lines[5]?.split('ans)')[1]?.trim(),
+        };
       });
+
+      const errors = validateFormat(questions);
+      if (errors.length > 0) {
+        setFormatErrors(errors);
+        setShowModal(true);
+        return;
+      }
 
       // Send parsed questions to the backend using Axios
       await axios.post('https://trainingwebsite-apot.onrender.com/api/upload-quiz', questions);
@@ -186,6 +217,7 @@ export default function AdminQuizPage() {
                         }}
                     />
                 </th>
+                <th className="border border-gray-300 p-2">S/N</th>
                 <th className="border border-gray-300 p-2">Question</th>
                 <th className="border border-gray-300 p-2">Options</th>
                 <th className="border border-gray-300 p-2">Answer</th>
@@ -193,8 +225,16 @@ export default function AdminQuizPage() {
             </tr>
             </thead>
             <tbody>
-                {quizzes.map((quiz) => (
+                {quizzes.map((quiz, index) => (
                     <tr key={quiz.id}>
+                        <td className="border border-gray-300 p-2">
+                            <input
+                                type="checkbox"
+                                checked={selectedQuizzes.includes(quiz.id)}
+                                onChange={() => handleCheckboxChange(quiz.id)}
+                            />
+                        </td>
+                        <td className="border border-gray-300 p-2">{index + 1}</td> {/* Serial number */}
                         {editingQuizId === quiz.id ? (
                             <>
                                 <td className="border border-gray-300 p-2">
@@ -206,23 +246,15 @@ export default function AdminQuizPage() {
                                     />
                                 </td>
                                 <td className="border border-gray-300 p-2">
-                                    {editedQuiz.options.map((option, index) => (
+                                    {editedQuiz.options.map((option, idx) => (
                                         <input
-                                            key={index}
+                                            key={idx}
                                             type="text"
                                             value={option}
-                                            onChange={(e) => handleOptionChange(index, e.target.value)}
+                                            onChange={(e) => handleOptionChange(idx, e.target.value)}
                                             className="border p-1 w-full mb-1"
                                         />
                                     ))}
-                                </td>
-                                <td className="border border-gray-300 p-2">
-                                    <input
-                                        type="text"
-                                        value={editedQuiz.answer}
-                                        onChange={(e) => handleInputChange('answer', e.target.value)}
-                                        className="border p-1 w-full"
-                                    />
                                 </td>
                                 <td className="border border-gray-300 p-2">
                                     <button
@@ -237,13 +269,18 @@ export default function AdminQuizPage() {
                             <>
                                 <td className="border border-gray-300 p-2">{quiz.question}</td>
                                 <td className="border border-gray-300 p-2">{quiz.options.join(', ')}</td>
-                                <td className="border border-gray-300 p-2">{quiz.answer}</td>
                                 <td className="border border-gray-300 p-2">
                                     <button
                                         onClick={() => handleEditClick(quiz)}
-                                        className="bg-yellow-500 text-white px-2 py-1"
+                                        className="bg-yellow-500 text-white px-2 py-1 mr-2"
                                     >
                                         Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDeleteSingle(quiz.id)}
+                                        className="bg-red-500 text-white px-2 py-1"
+                                    >
+                                        Delete
                                     </button>
                                 </td>
                             </>
@@ -259,6 +296,50 @@ export default function AdminQuizPage() {
         >
             Delete Selected
         </button>
+
+        {showModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded shadow-lg w-3/4">
+                    <h2 className="text-xl font-bold mb-4">Format Errors</h2>
+                    <table className="table-auto w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr>
+                                <th className="border border-gray-300 p-2">Row</th>
+                                <th className="border border-gray-300 p-2">Your Format</th>
+                                <th className="border border-gray-300 p-2">Corrected Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {formatErrors.map((error, index) => (
+                                <tr key={index}>
+                                    <td className="border border-gray-300 p-2">{error.row}</td>
+                                    <td className="border border-gray-300 p-2">
+                                        <pre>
+                                            {error.yourFormat.question ? error.yourFormat.question : 'Missing Question'}
+                                            {error.yourFormat.options ? error.yourFormat.options.map((opt, idx) => `\n${String.fromCharCode(97 + idx)}) ${opt}`) : '\nOptions Missing'}
+                                            {error.yourFormat.answer ? `\nans) ${error.yourFormat.answer}` : '\nAnswer Missing'}
+                                        </pre>
+                                    </td>
+                                    <td className="border border-gray-300 p-2">
+                                        <pre>
+                                            {error.correctedFormat.question}
+                                            {error.correctedFormat.options.map((opt, idx) => `\n${String.fromCharCode(97 + idx)}) ${opt}`)}
+                                            \nans) {error.correctedFormat.answer}
+                                        </pre>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <button
+                        onClick={() => setShowModal(false)}
+                        className="bg-blue-500 text-white px-4 py-2 mt-4"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        )}
     </div>
 );
 }
