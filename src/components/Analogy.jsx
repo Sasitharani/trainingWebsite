@@ -8,8 +8,8 @@ export default function Analogy() {
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    // Fetch quizzes with answers from the backend
-    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer')
+    // Fetch analogy-specific quizzes from the backend
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=analogy')
       .then((response) => response.json())
       .then((data) => {
         setQuizzes(data);
