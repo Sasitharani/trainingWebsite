@@ -7,7 +7,7 @@ export default function PlacementTraining() {
 
   useEffect(() => {
     // Fetch quizzes from the backend
-    fetch('/api/get-quizzes')
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-no-answer')
       .then((response) => response.json())
       .then((data) => setQuizzes(data));
 
@@ -41,23 +41,25 @@ export default function PlacementTraining() {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Placement Training</h1>
       <div className="mb-4">
-        <p className="text-lg">{quiz.question}</p>
-        {quiz.type === 'multiple-choice' ? (
-          <ul>
-            {quiz.options.map((option, index) => (
-              <li key={index} className="mb-2">
-                <label>
-                  <input type="radio" name="quiz-option" value={option} /> {option}
-                </label>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <input type="text" className="border p-2 w-full" placeholder="Your answer" />
-        )}
+        <p className="text-lg">
+          {quiz.id}) {quiz.question}
+        </p>
+        <ul>
+          {quiz.options.map((option, index) => (
+            <li key={index} className="mb-2">
+              {String.fromCharCode(97 + index)}) {option}
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="mb-4">Time Left: {formatTime(timeLeft)}</div>
-      <button onClick={handleNextQuiz} className="bg-blue-500 text-white px-4 py-2">Next</button>
+      {currentQuiz < quizzes.length - 1 ? (
+        <button onClick={handleNextQuiz} className="bg-blue-500 text-white px-4 py-2">
+          Next
+        </button>
+      ) : (
+        <button className="bg-green-500 text-white px-4 py-2">Submit</button>
+      )}
     </div>
   );
 }

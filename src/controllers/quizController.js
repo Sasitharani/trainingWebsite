@@ -50,7 +50,7 @@ export const test = async (req, res) => {
 export const fetchQuizzesController = async (req, res) => {
   try {
     console.log('Step 1: API /get-quizzes hit'); // Log when the API is hit
-    const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond, ans FROM questions';
+    const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond FROM questions';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Step 2: Error fetching quizzes:', err);
@@ -61,13 +61,34 @@ export const fetchQuizzesController = async (req, res) => {
         id: row.Sr_No,
         question: row.question,
         options: [row.optiona, row.optionb, row.optionc, row.optiond],
-        answer: row.ans,
       }));
       console.log('Step 2: Fetched quizzes:', quizzes); // Log the transformed quizzes
       res.status(200).json(quizzes);
     });
   } catch (error) {
     console.error('Step 2: Error:', error);
+    res.status(500).send('An error occurred while fetching quizzes.');
+  }
+};
+
+export const fetchQuizzesWithoutAnswerController = async (req, res) => {
+  try {
+    console.log('API /get-quizzes-no-answer hit');
+    const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond FROM questions';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching quizzes:', err);
+        return res.status(500).send('Failed to fetch quizzes.');
+      }
+      const quizzes = results.map((row) => ({
+        id: row.Sr_No,
+        question: row.question,
+        options: [row.optiona, row.optionb, row.optionc, row.optiond],
+      }));
+      res.status(200).json(quizzes);
+    });
+  } catch (error) {
+    console.error('Error:', error);
     res.status(500).send('An error occurred while fetching quizzes.');
   }
 };
