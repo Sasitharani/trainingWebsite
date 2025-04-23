@@ -56,6 +56,7 @@ export const fetchQuizzesController = async (req, res) => {
         console.error('Step 2: Error fetching quizzes:', err);
         return res.status(500).send('Failed to fetch quizzes.');
       }
+      console.log('Raw database results:', results); // Debugging log for raw results
       const quizzes = results.map((row) => ({
         id: row.Sr_No,
         question: row.question,
