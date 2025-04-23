@@ -110,6 +110,7 @@ export default function AdminQuizPage() {
 
   const handleCheckboxChange = (id) => {
     console.log('Checkbox ID:', id); // Debugging log to check the ID
+    alert(`Checkbox clicked! ID in fetched data: ${id}`); // Display alert with ID
     setSelectedQuizzes((prevSelected) => {
       const updatedSelection = prevSelected.includes(id)
         ? prevSelected.filter((quizId) => quizId !== id) // Remove if already selected
