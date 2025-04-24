@@ -71,19 +71,25 @@ export const fetchQuizzesController = async (req, res) => {
 export const fetchQuizzesWithAnswerController = async (req, res) => {
   try {
     console.log('API /get-quizzes-with-answer hit');
+    const { category } = req.query; // Extract category from query parameters
+    console.log('Category received:', category); // Log the received category
     const query = 'SELECT Sr_No, question, optiona, optionb, optionc, optiond, ans, type FROM questions';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching quizzes:', err);
         return res.status(500).send('Failed to fetch quizzes.');
       }
-      const quizzes = results.map((row) => ({
-        id: row.Sr_No,
-        question: row.question,
-        options: [row.optiona, row.optionb, row.optionc, row.optiond],
-        answer: row.ans, // Include the answer for temporary storage
-        type: row.type, // Include the type for filtering
-      }));
+      console.log('Raw database results:', results); // Log raw database results
+      const quizzes = results
+        .filter((row) => row.type === category) // Filter quizzes by category
+        .map((row) => ({
+          id: row.Sr_No,
+          question: row.question,
+          options: [row.optiona, row.optionb, row.optionc, row.optiond],
+          answer: row.ans, // Include the answer for temporary storage
+          type: row.type, // Include the type for filtering
+        }));
+      console.log('Filtered quizzes:', quizzes); // Log filtered quizzes
       res.status(200).json(quizzes);
     });
   } catch (error) {

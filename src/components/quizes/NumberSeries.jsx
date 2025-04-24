@@ -8,10 +8,12 @@ export default function NumberSeries() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Number%20Series')
+    fetch('http://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=NumberSeries')
       .then((response) => response.json())
       .then((data) => {
+        console.log('Fetched data:', data); // Log the fetched data
         const filteredQuizzes = data.filter((quiz) => quiz.type === 'NumberSeries');
+        console.log('Filtered quizzes by type:', filteredQuizzes.map((quiz) => quiz.type)); // Log the type values
         setQuizzes(filteredQuizzes);
         setIsLoading(false);
       })

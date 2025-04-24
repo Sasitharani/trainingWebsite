@@ -79,7 +79,8 @@ export default function AdminQuizPage() {
     'Cost',
     'Words Rearrangement',
     'Calendar',
-    'Problem Solving', // Added Problem Solving to the dropdown
+    'Problem Solving',
+    'Logical', // Added Logical to the dropdown
   ];
 
   return (

@@ -11,7 +11,9 @@ export default function Logical() {
     fetch('http://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Logical')
       .then((response) => response.json())
       .then((data) => {
+        console.log('Fetched data:', data); // Log the fetched data
         const filteredQuizzes = data.filter((quiz) => quiz.type === 'Logical');
+        console.log('Filtered quizzes by type:', filteredQuizzes.map((quiz) => quiz.type)); // Log the type values
         setQuizzes(filteredQuizzes);
         setIsLoading(false);
       })
