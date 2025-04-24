@@ -1,10 +1,102 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 
 export default function WordsRearrangement() {
+  const [quizzes, setQuizzes] = useState([]);
+  const [userAnswers, setUserAnswers] = useState({}); // Store user-selected answers
+  const [score, setScore] = useState(0); // Store the score
+  const [isSubmitted, setIsSubmitted] = useState(false); // Track submission status
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+
+  useEffect(() => {
+    // Fetch WordsRearrangement-specific quizzes from the backend
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=WordsRearrangement')
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter quizzes to include only those of type 'WordsRearrangement'
+        const filteredQuizzes = data.filter((quiz) => quiz.type === 'WordsRearrangement');
+        setQuizzes(filteredQuizzes);
+        setIsLoading(false); // Stop loading once data is fetched
+      })
+      .catch(() => setIsLoading(false)); // Stop loading even if there's an error
+  }, []);
+
+  const handleOptionChange = (quizId, selectedOption) => {
+    setUserAnswers((prev) => ({ ...prev, [quizId]: selectedOption }));
+  };
+
+  const handleSubmit = () => {
+    let calculatedScore = 0;
+    quizzes.forEach((quiz) => {
+      if (userAnswers[quiz.id] === quiz.answer) {
+        calculatedScore += 1;
+      }
+    });
+    setScore(calculatedScore);
+    setIsSubmitted(true);
+  };
+
+  if (isLoading) {
+    return <div>Loading quizzes...</div>;
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Your Final Score: {score}/{quizzes.length}</h1>
+        {quizzes.map((quiz) => (
+          <div key={quiz.id} className="mb-4">
+            <p className="text-lg font-bold">{quiz.question}</p>
+            <p>
+              Your Answer: {userAnswers[quiz.id]}{' '}
+              {userAnswers[quiz.id] === quiz.answer ? (
+                <span className="text-green-500">✔</span>
+              ) : (
+                <span className="text-red-500">✘</span>
+              )}
+            </p>
+            <p>Correct Answer: {quiz.answer}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Words Rearrangement</h1>
-      <p>Welcome to the Words Rearrangement page. Here you can practice rearranging words to form meaningful sentences.</p>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
+        <h1 className="text-2xl font-bold mb-6 text-center">Words Rearrangement</h1>
+        {quizzes.map((quiz) => (
+          <div key={quiz.id} className="mb-6">
+            <p className="text-lg font-semibold mb-4 text-center">{quiz.question}</p>
+            <ul className="space-y-2">
+              {quiz.options.map((option, index) => (
+                <li key={index} className="relative">
+                  <label
+                    className={`block bg-gray-200 rounded-lg p-3 cursor-pointer transition ${
+                      userAnswers[quiz.id] === option ? 'bg-[#f9cf45] border border-solid border-[#e7e7ec]' : 'hover:bg-[#f9cf45] hover:border hover:border-solid hover:border-[#e7e7ec]'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={`quiz-${quiz.id}`}
+                      value={option}
+                      onChange={() => handleOptionChange(quiz.id, option)}
+                      className="hidden"
+                    />
+                    {String.fromCharCode(97 + index)}) {option}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
