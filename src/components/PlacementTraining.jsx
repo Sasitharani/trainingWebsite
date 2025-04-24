@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+
 export default function PlacementTraining() {
   return (
     <div className="bg-white p-8">
