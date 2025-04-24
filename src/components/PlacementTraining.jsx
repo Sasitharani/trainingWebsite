@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function PlacementTraining() {
   return (
-    <div className="bg-white p-8">
+    <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Placement Training</h1>
       <ul className="list-disc pl-5">
         <li><Link to="/analogy">Analogy</Link></li>
@@ -16,6 +16,12 @@ export default function PlacementTraining() {
         <li><Link to="/words-rearrangement">Words Rearrangement</Link></li>
         <li><Link to="/calendar">Calendar</Link></li>
       </ul>
+      <Link to="/problem-solving" className="text-blue-500 hover:underline">
+        Go to Problem Solving
+      </Link>
+      <Link to="/logical" className="text-blue-500 hover:underline ml-4">
+        Go to Logical
+      </Link>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ProblemSolving from './ProblemSolving';
 
 export default function AdminQuizPage() {
   const [bulkInput, setBulkInput] = useState('');
@@ -69,6 +70,18 @@ export default function AdminQuizPage() {
     }
   };
 
+  const quizCategories = [
+    'Analogy',
+    'Number Series',
+    'Meanings',
+    'Opposites',
+    'Profit and Loss',
+    'Cost',
+    'Words Rearrangement',
+    'Calendar',
+    'Problem Solving', // Added Problem Solving to the dropdown
+  ];
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Quiz Page</h1>
@@ -80,15 +93,11 @@ export default function AdminQuizPage() {
             onChange={handleTypeChange}
             className="border p-2 w-full"
           >
-            <option value="Analogy">Analogy</option>
-            <option value="NumberSeries">Number Series</option>
-            <option value="Meanings">Meanings</option>
-            <option value="Opposites">Opposites</option>
-            <option value="AlphanumericLetters">Alphanumeric Letters</option>
-            <option value="ProfitLoss">Profit and Loss</option>
-            <option value="Cost">Cost</option>
-            <option value="WordsRearrangement">Words Rearrangement</option>
-            <option value="Calendar">Calendar</option>
+            {quizCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-4">

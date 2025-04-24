@@ -1,23 +1,21 @@
 import { useState, useEffect } from 'react';
 
-export default function WordsRearrangement() {
+export default function Calendar() {
   const [quizzes, setQuizzes] = useState([]);
-  const [userAnswers, setUserAnswers] = useState({}); // Store user-selected answers
-  const [score, setScore] = useState(0); // Store the score
-  const [isSubmitted, setIsSubmitted] = useState(false); // Track submission status
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [userAnswers, setUserAnswers] = useState({});
+  const [score, setScore] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch WordsRearrangement-specific quizzes from the backend
-    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=WordsRearrangement')
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Calendar')
       .then((response) => response.json())
       .then((data) => {
-        // Filter quizzes to include only those of type 'WordsRearrangement'
-        const filteredQuizzes = data.filter((quiz) => quiz.type === 'WordsRearrangement');
+        const filteredQuizzes = data.filter((quiz) => quiz.type === 'Calendar');
         setQuizzes(filteredQuizzes);
-        setIsLoading(false); // Stop loading once data is fetched
+        setIsLoading(false);
       })
-      .catch(() => setIsLoading(false)); // Stop loading even if there's an error
+      .catch(() => setIsLoading(false));
   }, []);
 
   const handleOptionChange = (quizId, selectedOption) => {
@@ -64,7 +62,7 @@ export default function WordsRearrangement() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Words Rearrangement</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Calendar</h1>
         {quizzes.map((quiz) => (
           <div key={quiz.id} className="mb-6">
             <p className="text-lg font-semibold mb-4 text-center">{quiz.question}</p>

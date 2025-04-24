@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
 
-export default function ProfitAndLoss() {
+export default function WordsRearrangement() {
   const [quizzes, setQuizzes] = useState([]);
-  const [userAnswers, setUserAnswers] = useState({});
-  const [score, setScore] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userAnswers, setUserAnswers] = useState({}); // Store user-selected answers
+  const [score, setScore] = useState(0); // Store the score
+  const [isSubmitted, setIsSubmitted] = useState(false); // Track submission status
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=ProfitAndLoss')
+    // Fetch WordsRearrangement-specific quizzes from the backend
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=WordsRearrangement')
       .then((response) => response.json())
       .then((data) => {
-        const filteredQuizzes = data.filter((quiz) => quiz.type === 'ProfitAndLoss');
+        console.log('Fetched quizzes:', data); // Log the fetched data to the browser console
+        const filteredQuizzes = data.filter((quiz) => quiz.type === 'WordsRearrangement');
         setQuizzes(filteredQuizzes);
-        setIsLoading(false);
+        setIsLoading(false); // Stop loading once data is fetched
       })
-      .catch(() => setIsLoading(false));
+      .catch(() => setIsLoading(false)); // Stop loading even if there's an error
   }, []);
 
   const handleOptionChange = (quizId, selectedOption) => {
@@ -62,7 +64,7 @@ export default function ProfitAndLoss() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Profit and Loss</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Words Rearrangement</h1>
         {quizzes.map((quiz) => (
           <div key={quiz.id} className="mb-6">
             <p className="text-lg font-semibold mb-4 text-center">{quiz.question}</p>

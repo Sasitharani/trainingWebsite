@@ -10,17 +10,12 @@ npm react-router-dom
 #00BFFF (deep sky blue)
 
 format of the quiz to be uploaded
+create a similar intermediate level 10 questions in the following format  follow the format the spaces as well as the case give options of your choice
 
-What is the capital of France?
-a) Paris
-b) London
-c) Berlin
-d) Madrid
-ans) Paris
+This is the question?
+a) 
+b) 
+c) 
+d) 
+ans) 
 
-Which planet is known as the Red Planet?
-a) Earth
-b) Mars
-c) Jupiter
-d) Venus
-ans) Mars

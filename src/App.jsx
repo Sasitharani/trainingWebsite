@@ -10,17 +10,18 @@ import Login from './components/LoginPage'; // Import Login component
 import UserProfile from './components/UserProfile'; // Import UserProfile component
 import Palette from './components/Palette'; // Import Palette component
 import LogoAnimation from './components/LogoAnimation';
-import AdminQuizPage from './components/AdminQuizPage';
-import Analogy from './components/Analogy';
-import NumberSeries from './components/NumberSeries';
-import Meanings from './components/Meanings';
-import Opposites from './components/Opposites';
+import AdminQuizPage from './components/quizes/AdminQuizPage';
+import Analogy from './components/quizes/Analogy';
+import NumberSeries from './components/quizes/NumberSeries';
+import Meanings from './components/quizes/Meanings';
+import Opposites from './components/quizes/Opposites';
 import AlphanumericLetters from './components/AlphanumericLetters';
+import ProblemSolving from './components/quizes/ProblemSolving';
+import Logical from './components/quizes/Logical';
 
-
-import Cost from './components/Cost';
-import WordsRearrangement from './components/WordsRearrangement';
-import Calendar from './components/Calendar';
+import Cost from './components/quizes/Cost';
+import WordsRearrangement from './components/quizes/WordsRearrangement';
+import Calendar from './components/quizes/Calendar';
 
 import './App.css';
 import './tailwind.css';
@@ -67,6 +68,8 @@ function App() {
           <Route path="/cost" element={<Cost />} />
           <Route path="/words-rearrangement" element={<WordsRearrangement />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/problem-solving" element={<ProblemSolving />} /> {/* Added Problem Solving route */}
+          <Route path="/logical" element={<Logical />} /> {/* Added Logical route */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
