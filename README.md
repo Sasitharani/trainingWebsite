@@ -18,4 +18,7 @@ b)
 c) 
 d) 
 ans) 
-
+TO Do
+1)check why some pages are not display
+2)create a admin page that will display all the questions with crud operations
+3)Show Preview before entering into DB

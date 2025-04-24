@@ -9,7 +9,7 @@ export default function Analogy() {
 
   useEffect(() => {
     // Fetch analogy-specific quizzes from the backend
-    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=analogy')
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Analogy')
       .then((response) => response.json())
       .then((data) => {
         // Filter quizzes to include only those of type 'analogy'

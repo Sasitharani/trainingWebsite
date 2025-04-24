@@ -8,7 +8,7 @@ export default function ProblemSolving() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=ProblemSolving')
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=ProblemSolving')
       .then((response) => response.json())
       .then((data) => {
         const filteredQuizzes = data.filter((quiz) => quiz.type === 'ProblemSolving');

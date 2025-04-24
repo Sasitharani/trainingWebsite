@@ -8,7 +8,7 @@ export default function Logical() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Logical')
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Logical')
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched data:', data); // Log the fetched data
