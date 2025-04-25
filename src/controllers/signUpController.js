@@ -7,6 +7,7 @@ export const signUpController = async (req, res) => {
   try {
     // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
 
     // Insert the user into the database
     const query = 'INSERT INTO iitiusers (username, email, password, phoneNumber, membership) VALUES (?, ?, ?, ?, ?)';

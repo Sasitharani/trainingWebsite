@@ -21,6 +21,7 @@ const Signup = () => {
     const [passwordError, setPasswordError] = useState(' Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.'); // Add password error state
     const [isPasswordValid, setIsPasswordValid] = useState(false); // Add form validity state
     const [isEmailValid, setIsEmailValid] = useState(false); // Add form validity state
+    const [isFormValid, setIsFormValid] = useState(false); // Add form validity state
     const[EmailMessage, setEmailMessage] = useState(''); // Add email message state
     const [passwordMatch, setPasswordMatch] = useState('');
     const [matchPasswordVerified, setMatchPasswordVerified] = useState(false);
@@ -31,11 +32,12 @@ const Signup = () => {
 
     const handleSignup = async (e) => {
         e.preventDefault();
+        console.log('Sign up form submitted');
         validateForm(); // Validate form on submit
         setLoading(true); // Set loading to true
  
         if (isEmailValid && isPasswordValid && matchPasswordVerified) {
-            //console.log('Password while submiting', password)
+            console.log('Sign up clicked ')
             try {
       
                 const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/signup', {
@@ -44,15 +46,20 @@ const Signup = () => {
                     password,
                     phoneNumber
                 });
-
+             
                 // Wait for the database operation to complete
                 if (response.status === 200) {
                     setMessage('User registered successfully!');
+                    console.log('Email:', email);
+                    console.log('Password:', password);
                     // Automatically log the user in
                     const loginResponse = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
                         email,
                         password
                     });
+
+                    console.log('Signup response:', response.data); // Debugging log for signup response
+                    console.log('Login response:', loginResponse.data); // Debugging log for login response
 
                     if (loginResponse.status === 200) {
                         const { token } = loginResponse.data;
@@ -89,23 +96,26 @@ const Signup = () => {
 
 
  const validateForm = () => { // Validate form
-    //console.log('Validity of Email:-', isEmailValid + 'Validity of Password:-', isPasswordValid);
-    if (username && email && emailAvailable && password && !passwordError) {
-        //console.log('Form is valid');
-        //setIsFormValid(true);
-    } else {
-        //console.log('Form is not valid');
-        //setIsFormValid(false);
-    }
-};
+        console.log('Validity of Email:-', isEmailValid + ' Validity of Password:-', isPasswordValid);
+        if (username && email && emailAvailable && password && !passwordError) {
+            console.log('Form is valid');
+            setIsFormValid(true);
+        } else {
+            console.log('Form is not valid');
+            setIsFormValid(false);
+        }
+    };
 
 
 const checkEmailAvailability = async () => {
+        setLoading(true); // Set loading to true before checking email availability
         try {
+            console.log('Checking email availability:', email); // Debugging log
             const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/check-email-availability', { email });
             if (response.data.available) {
                 setEmailAvailable(true);
                 setEmailMessage('Email is available');
+                setIsEmailValid(true); // Set email validity to true
             } else {
                 setEmailAvailable(false);
                 setEmailMessage('Email is already taken');
@@ -113,6 +123,8 @@ const checkEmailAvailability = async () => {
         } catch (error) {
             console.error('Error checking email availability:', error);
             setEmailMessage('Error checking email availability');
+        } finally {
+            setLoading(false); // Set loading to false after the check
         }
     };
 
@@ -139,21 +151,34 @@ const checkEmailAvailability = async () => {
                 <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
                 <form onSubmit={handleSignup}>
                 <UsernameAuthentication username={username} setUsername={setUsername} />
-                <EmailAuthentication
-                email={email}
-                setEmail={setEmail}
-                setEmailAvailable={setEmailAvailable}
-                setEmailMessage={setEmailMessage}
-                emailMessage={EmailMessage} 
-                emailAvailable={emailAvailable}
-                validateForm={validateForm}
-                loading={loading}
-                setLoading={setLoading}
-               setIsEmailValid={setIsEmailValid}
-               isEmailValid={isEmailValid}
-               onBlur={handleEmailBlur} // Added onBlur event
-                />
-
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                        Email
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onBlur={handleEmailBlur}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required
+                    />
+                    <button
+                        type="button"
+                        onClick={checkEmailAvailability}
+                        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        Check Email Availability
+                    </button>
+                    {EmailMessage && (
+                        <p
+                            className={`mt-2 text-sm ${emailAvailable ? 'text-green-600' : 'text-red-600'}`}
+                        >
+                            {EmailMessage}
+                        </p>
+                    )}
+                </div>
                 <PasswordVerification
                 password={password}
                 setPassword={setPassword}

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import quizRoutes from './src/routes/quizRoutes.js';
 import checkEmailAvailabilityRoute from './src/routes/checkEmailAvailabilityRoute.js';
+import loginRoute from './src/routes/loginRoute.js';
 
 import db from './src/db.js';
 
@@ -24,6 +25,8 @@ app.use('/api', quizRoutes);
 
 // Use checkEmailAvailabilityRoute for email availability endpoint
 app.use('/api', checkEmailAvailabilityRoute);
+
+app.use('/api', loginRoute);
 
 
 app.listen(PORT, () => {
