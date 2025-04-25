@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function Cost() {
+export default function Numbers() {
   const [quizzes, setQuizzes] = useState([]);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
@@ -8,10 +8,10 @@ export default function Cost() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=Cost')
+    fetch('https://trainingwebsite-apot.onrender.com/api/get-quizzes-with-answer?category=numbers')
       .then((response) => response.json())
       .then((data) => {
-        const filteredQuizzes = data.filter((quiz) => quiz.type === 'Cost');
+        const filteredQuizzes = data.filter((quiz) => quiz.type === 'numbers');
         setQuizzes(filteredQuizzes);
         setIsLoading(false);
       })
@@ -62,7 +62,7 @@ export default function Cost() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Cost</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Numbers</h1>
         {quizzes.map((quiz) => (
           <div key={quiz.id} className="mb-6">
             <p className="text-lg font-semibold mb-4 text-center">{quiz.question}</p>

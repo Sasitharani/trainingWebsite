@@ -15,11 +15,11 @@ import Analogy from './components/quizes/Analogy';
 import NumberSeries from './components/quizes/NumberSeries';
 import Meanings from './components/quizes/Meanings';
 import Opposites from './components/quizes/Opposites';
-import AlphanumericLetters from './components/AlphanumericLetters';
+import Alphabets from './components/Alphabets';
 import ProblemSolving from './components/quizes/ProblemSolving';
 import Logical from './components/quizes/Logical';
 
-import Cost from './components/quizes/Cost';
+import Cost from './components/quizes/Numbers';
 import WordsRearrangement from './components/quizes/WordsRearrangement';
 import Calendar from './components/quizes/Calendar';
 
@@ -35,6 +35,7 @@ import Aptitude from './main/Aptitude';
 import GroupDiscussion from './main/GroupDiscussion';
 import FaceToFaceInterview from './main/FaceToFaceInterview';
 import ProfitAndLoss from './components/ProfitAndLoss';
+import Numbers from './components/quizes/Numbers';
 
 function App() {
   return (
@@ -63,9 +64,9 @@ function App() {
           <Route path="/number-series" element={<NumberSeries />} />
           <Route path="/meanings" element={<Meanings />} />
           <Route path="/opposites" element={<Opposites />} />
-          <Route path="/alphanumeric-letters" element={<AlphanumericLetters />} />
+          <Route path="/Alphabets" element={<Alphabets />} />
           <Route path="/profit-loss" element={<ProfitAndLoss />} />
-          <Route path="/cost" element={<Cost />} />
+          <Route path="/numbers" element={<Numbers />} />
           <Route path="/words-rearrangement" element={<WordsRearrangement />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/problem-solving" element={<ProblemSolving />} /> {/* Added Problem Solving route */}

@@ -10,7 +10,7 @@ export default function PlacementTraining() {
         <li><Link to="/number-series">Number Series</Link></li>
         <li><Link to="/meanings">Meanings</Link></li>
         <li><Link to="/opposites">Opposites</Link></li>
-        <li><Link to="/alphanumeric-letters">Alphanumeric Letters</Link></li>
+        <li><Link to="/Alphabets">Alphabets</Link></li>
         <li><Link to="/profit-loss">Profit and Loss</Link></li>
         <li><Link to="/cost">Cost</Link></li>
         <li><Link to="/words-rearrangement">Words Rearrangement</Link></li>
@@ -22,6 +22,9 @@ export default function PlacementTraining() {
       <Link to="/logical" className="text-blue-500 hover:underline ml-4">
         Go to Logical
       </Link>
+      <div className="links">
+        <a href="/numbers" className="text-blue-500 hover:underline">Go to Numbers Quiz</a>
+      </div>
     </div>
   );
 }

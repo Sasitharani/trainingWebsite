@@ -55,7 +55,7 @@ export default function AdminQuizPage() {
             lines[4]?.split(') ')[1] || 'No option provided',
           ],
           answer: lines[5]?.split('ans)')[1]?.trim() || 'No answer provided', // Handle missing or incorrect format
-          type: selectedType === 'Number Series' ? 'NumberSeries' : selectedType, // Adjust type for Number Series
+          type: selectedType === 'Numbers' ? 'numbers' : selectedType, // Adjust type for Numbers
         };
       });
 
@@ -76,7 +76,8 @@ export default function AdminQuizPage() {
     'Meanings',
     'Opposites',
     'Profit and Loss',
-    'Cost',
+    'Numbers',
+    'Alphabets',
     'Words Rearrangement',
     'Calendar',
     'Problem Solving',
