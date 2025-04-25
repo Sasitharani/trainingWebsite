@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import quizRoutes from './src/routes/quizRoutes.js';
+import checkEmailAvailabilityRoute from './src/routes/checkEmailAvailabilityRoute.js';
 
 import db from './src/db.js';
 
@@ -21,6 +22,8 @@ app.use(bodyParser.json());
 // Use quizRoutes for all quiz-related endpoints
 app.use('/api', quizRoutes);
 
+// Use checkEmailAvailabilityRoute for email availability endpoint
+app.use('/api', checkEmailAvailabilityRoute);
 
 
 app.listen(PORT, () => {

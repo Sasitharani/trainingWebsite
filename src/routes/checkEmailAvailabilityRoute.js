@@ -1,8 +1,9 @@
 import express from 'express';
-import { checkEmailAvailability } from './checkEmailAvailabilityController.js'; // Ensure the correct path
+import { checkEmailAvailabilityController } from '../controllers/checkEmailAvailabilityController.js';
 
 const router = express.Router();
 
-router.post('/check-email', checkEmailAvailability); // Ensure the correct route path
+// Route to check email availability
+router.post('/check-email-availability', checkEmailAvailabilityController);
 
 export default router;

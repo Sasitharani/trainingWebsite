@@ -100,6 +100,30 @@ const Signup = () => {
 };
 
 
+const checkEmailAvailability = async () => {
+        try {
+            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/check-email-availability', { email });
+            if (response.data.available) {
+                setEmailAvailable(true);
+                setEmailMessage('Email is available');
+            } else {
+                setEmailAvailable(false);
+                setEmailMessage('Email is already taken');
+            }
+        } catch (error) {
+            console.error('Error checking email availability:', error);
+            setEmailMessage('Error checking email availability');
+        }
+    };
+
+    // Call checkEmailAvailability when the user leaves the email input field
+    const handleEmailBlur = () => {
+        if (email) {
+            checkEmailAvailability();
+        }
+    };
+
+
 
 
     return (
@@ -127,6 +151,7 @@ const Signup = () => {
                 setLoading={setLoading}
                setIsEmailValid={setIsEmailValid}
                isEmailValid={isEmailValid}
+               onBlur={handleEmailBlur} // Added onBlur event
                 />
 
                 <PasswordVerification
