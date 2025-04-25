@@ -62,7 +62,7 @@ export default function Numbers() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Numbers</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Quantitative</h1>
         {quizzes.map((quiz) => (
           <div key={quiz.id} className="mb-6">
             <p className="text-lg font-semibold mb-4 text-center">{quiz.question}</p>

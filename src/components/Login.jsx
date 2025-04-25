@@ -41,13 +41,6 @@ const Login = () => {
                 setMessage('Password did not match.');
             }
         }  catch (error) {
-            //console.log('Server response:', response.data);
-            const hashedPassword = response.data.hashedPassword;
-            const username = response.data.username; // Extract username from response
-            console.log('Entered email:', email);
-            console.log('Entered username:', username);
-            console.log('Entered password:', password);
-            console.log('Hashed password from server:', hashedPassword);        
             console.error('Error during login:', error);
             if (error.response && error.response.data && error.response.data.message) {
                 setMessage(`Login failed: ${error.response.data.message}`);

@@ -23,7 +23,8 @@ ans)
 
 
 TO Do
-1)check why some pages are not display
+1)check why some pages are not display-done
 2)create a admin page that will display all the questions with crud operations
 3)Show Preview before entering into DB
 4)change loading symbol
+5)When user signsup by default the menbership column in the table iitiusers should be free

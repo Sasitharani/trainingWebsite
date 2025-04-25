@@ -31,6 +31,7 @@ export default function Header() {
           <li><Link to="/placement" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Placement Training</Link></li>
           <li><Link to="/signup" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Sign Up</Link></li>
           <li><Link to="/logo-animation" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Test Page</Link></li>
+          {isAdmin && <li><Link to="/admin-view" className="hover:text-gray-400">Admin View</Link></li>}
           {isAdmin && <li><Link to="/admin-quiz" className="hover:text-gray-400">Admin Quiz</Link></li>}
           {isLoggedIn ? (
             <li className="hover:text-gray-400">{email.slice(0, email.indexOf('@'))}</li>

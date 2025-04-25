@@ -1,61 +1,26 @@
 import bcrypt from 'bcryptjs';
-import db from '../db.js'; // Ensure the correct path
+import db from '../db.js';
 
-const signup = async (req, res) => {
-  const { username, email, password } = req.body;
+export const signUpController = async (req, res) => {
+  const { username, email, password, phoneNumber } = req.body;
+
   try {
+    // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log('Hashed Password from signUpController:', hashedPassword);
 
-    const query = `
-      INSERT INTO iitiusers (username, password, email)
-      VALUES (?, ?, ?)
-    `;
-    const values = [username, hashedPassword, email];
-    db.query(query, values, (err, results) => {
+    // Insert the user into the database
+    const query = 'INSERT INTO iitiusers (username, email, password, phoneNumber, membership) VALUES (?, ?, ?, ?, ?)';
+    const values = [username, email, hashedPassword, phoneNumber, 'free']; // Default membership is 'free'
+
+    db.query(query, values, (err) => {
       if (err) {
-        console.error('Error inserting data:', err);
-        res.status(500).send('Signup failed. Please try again.');
-        return;
+        console.error('Error inserting user into database:', err);
+        return res.status(500).json({ message: 'Failed to register user' });
       }
-      res.status(200).send({ message: 'User registered successfully!' });
+      res.status(200).json({ message: 'User registered successfully' });
     });
   } catch (error) {
-    res.status(500).send('Error registering user');
+    console.error('Error during signup:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-const login = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const query = `SELECT * FROM iitiusers WHERE email = ?`;
-    db.query(query, [email], async (err, results) => {
-      if (err) {
-        console.error('Error fetching data:', err);
-        res.status(500).send('Login failed. Please try again.');
-        return;
-      }
-      if (results.length === 0) {
-        res.status(401).send('Invalid email or password.');
-        return;
-      }
-      const user = results[0];
-      console.log('User fetched from database:', user);
-      console.log('Password from request:', password);
-      console.log('Hashed password from database:', user.password);
-
-      const passwordValid = await bcrypt.compare(password, user.password);
-      console.log('Password valid:', passwordValid);
-
-      if (!passwordValid) {
-        res.status(401).send('Invalid email or password.');
-        return;
-      }
-      res.status(200).send({ message: 'Login successful!' });
-    });
-  } catch (error) {
-    res.status(500).send('Error logging in user');
-  }
-};
-
-export { signup, login };

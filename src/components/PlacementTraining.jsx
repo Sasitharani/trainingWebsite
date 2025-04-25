@@ -11,8 +11,7 @@ export default function PlacementTraining() {
         <li><Link to="/meanings">Meanings</Link></li>
         <li><Link to="/opposites">Opposites</Link></li>
         <li><Link to="/Alphabets">Alphabets</Link></li>
-        <li><Link to="/profit-loss">Profit and Loss</Link></li>
-        <li><Link to="/cost">Cost</Link></li>
+        <li><Link to="/numbers">Quantitative</Link></li>
         <li><Link to="/words-rearrangement">Words Rearrangement</Link></li>
         <li><Link to="/calendar">Calendar</Link></li>
       </ul>
