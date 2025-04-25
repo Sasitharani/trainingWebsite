@@ -4,6 +4,7 @@ export const checkEmailAvailabilityController = async (req, res) => {
   const { email } = req.body;
 
   try {
+    console.log('Email availability check API hit with email:', email); // Log the email being checked
     const query = 'SELECT email FROM iitiusers WHERE email = ?';
     db.query(query, [email], (err, results) => {
       if (err) {
