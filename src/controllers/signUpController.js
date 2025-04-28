@@ -11,7 +11,7 @@ export const signUpController = async (req, res) => {
 
     // Insert the user into the database
     const query = 'INSERT INTO iitiusers (username, email, password, phoneNumber, membership) VALUES (?, ?, ?, ?, ?)';
-    const values = [username, email, hashedPassword, phoneNumber, 'free']; // Default membership is 'free'
+    const values = [username, email, password, phoneNumber, 'free']; // Default membership is 'free'
 
     db.query(query, values, (err) => {
       if (err) {

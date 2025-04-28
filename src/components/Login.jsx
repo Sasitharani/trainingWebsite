@@ -23,32 +23,28 @@ const Login = () => {
 
     const handleLogin1 = async (e) => {
         e.preventDefault();
-        //console.log("Login form submitted");
         setLoading(true); // Set loading to true
         try {
-            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', { // Ensure the correct URL and port
+            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
                 email,
-                password
+                password // Send plain text password for comparison
             });
-            const { message, hashedPassword, username } = response.data; // Extract message, hashedPassword, and username from response
-            if (message === 'Login successful') {
-                console.log("Login successful inside loop");
+
+            console.log('Login Payload:', { email, password }); // Debugging log for login payload
+            console.log('Login API Response:', response.data); // Debugging log for login response
+
+            if (response.data.message === 'Login successful') {
+                console.log('Plain text password comparison successful'); // Debugging log for plain text password
                 setMessage('Login Successfully');
-                dispatch(login({ email, username })); // Dispatch login success with email and username
-                localStorage.setItem('user', JSON.stringify({ email })); // Update local storage
-                navigate('/user-profile'); // Redirect to UserProfile page
+                dispatch(login({ email, username: response.data.username }));
+                localStorage.setItem('user', JSON.stringify({ email }));
+                navigate('/user-profile');
             } else {
                 setMessage('Password did not match.');
             }
-        }  catch (error) {
+        } catch (error) {
             console.error('Error during login:', error);
-            if (error.response && error.response.data && error.response.data.message) {
-                setMessage(`Login failed: ${error.response.data.message}`);
-            } else if (error.message === 'Network Error') {
-                setMessage('Network error. Please check your connection and try again.');
-            } else {
-                setMessage('Login failed. Please try again.');
-            }
+            setMessage('Login failed. Please try again.');
         } finally {
             setLoading(false); // Set loading to false
         }

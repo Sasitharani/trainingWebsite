@@ -9,7 +9,6 @@ import PasswordVerification from './signUp/Password';
 import PasswordMatch from './signUp/PasswordMatch';
 
 
-
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -33,50 +32,27 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         console.log('Sign up form submitted');
-        validateForm(); // Validate form on submit
         setLoading(true); // Set loading to true
- 
+
         if (isEmailValid && isPasswordValid && matchPasswordVerified) {
-            console.log('Sign up clicked ')
+            console.log('All verifications passed, proceeding with signup...');
+            console.log('Password:', password);
             try {
-      
                 const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/signup', {
                     username,
                     email,
-                    password,
+                    password, // Save password as plain text for testing
                     phoneNumber
-                });
-             
-                // Wait for the database operation to complete
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Bypass-Hashing': 'true' // Custom header to bypass hashing for testing
+                    }});
+
                 if (response.status === 200) {
                     setMessage('User registered successfully!');
-                    console.log('Email:', email);
-                    console.log('Password:', password);
-                    // Automatically log the user in
-                    const loginResponse = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
-                        email,
-                        password
-                    });
-
-                    console.log('Signup response:', response.data); // Debugging log for signup response
-                    console.log('Login response:', loginResponse.data); // Debugging log for login response
-
-                    if (loginResponse.status === 200) {
-                        const { token } = loginResponse.data;
-                        localStorage.setItem('token', token);
-                        localStorage.setItem('username', username);
-                        localStorage.setItem('email', email);
-                        Swal.fire({
-                            title: 'Successfully Registered and Logged In!',
-                            icon: 'success',
-                            confirmButtonText: 'Continue',
-                            preConfirm: () => {
-                                navigate('/user-profile'); // Redirect to UserProfile page
-                            }
-                        });
-                    } else {
-                        throw new Error('Login failed after signup');
-                    }
+                    console.log('Plain text password saved:', password); // Debugging log for plain text password
+                    navigate('/login');
                 } else {
                     throw new Error('Signup failed');
                 }
@@ -95,16 +71,6 @@ const Signup = () => {
     };
 
 
- const validateForm = () => { // Validate form
-        console.log('Validity of Email:-', isEmailValid + ' Validity of Password:-', isPasswordValid);
-        if (username && email && emailAvailable && password && !passwordError) {
-            console.log('Form is valid');
-            setIsFormValid(true);
-        } else {
-            console.log('Form is not valid');
-            setIsFormValid(false);
-        }
-    };
 
 
 const checkEmailAvailability = async () => {

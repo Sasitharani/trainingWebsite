@@ -30,15 +30,25 @@ const login = async (req, res) => {
       const rehashedPassword = await bcrypt.hash(trimmedPassword, 10);
       console.log('Rehashed Password:', rehashedPassword);
 
+      console.log('Login request received with email:', email); // Debugging log for email
+      console.log('Password entered:', trimmedPassword); // Debugging log for entered password
+      console.log('Password from DB:', user.password); // Debugging log for password from database
       const isPasswordValid = await bcrypt.compare(trimmedPassword, user.password);
-      console.log('Password valid:', isPasswordValid);
+      console.log('Password comparison result:', isPasswordValid); // Debugging log for password comparison result
 
       if (!isPasswordValid) {
         console.error('Invalid email or password. Password does not match for email:', email); // Log error
         res.status(401).send('Password does not match for email.');
         return;
       }
-      res.status(200).send({ message: 'Login successful' });
+      res.status(200).send({ 
+        message: 'Login successful', 
+        logs: {
+          enteredPassword: trimmedPassword,
+          storedHash: user.password,
+          passwordValid: isPasswordValid
+        }
+      });
     });
   } catch (error) {
     console.error('Error logging in user:', error); // Log error
