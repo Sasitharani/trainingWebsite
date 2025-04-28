@@ -27,8 +27,8 @@ const login = async (req, res) => {
       console.log('Comparing passwords:', trimmedPassword, user.password);
 
       // Rehash the trimmed password and log it
-      const rehashedPassword = await bcrypt.hash(trimmedPassword, 10);
-      console.log('Rehashed Password:', rehashedPassword);
+      //const rehashedPassword = await bcrypt.hash(trimmedPassword, 10);
+     // console.log('Rehashed Password:', rehashedPassword);
 
       console.log('Login request received with email:', email); // Debugging log for email
       console.log('Password entered:', trimmedPassword); // Debugging log for entered password
