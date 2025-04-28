@@ -24,7 +24,9 @@ const Login = () => {
     const handleLogin1 = async (e) => {
         e.preventDefault();
         setLoading(true); // Set loading to true
+        console.log('Login form submitted');
         try {
+            console.log('Email:', email); // Debugging log for email
             const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
                 email,
                 password // Send plain text password for comparison
@@ -126,7 +128,7 @@ const Login = () => {
                 {user ? (
                     <button onClick={handleLogout}>Logout</button>
                 ) : (
-                    <button onClick={() => navigate('/login')}>Login</button>
+                    <button onClick={handleLogin1}>Login</button>
                 )}
             </div>
         </div>

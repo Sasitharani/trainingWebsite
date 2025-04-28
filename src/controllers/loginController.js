@@ -3,8 +3,8 @@ import db from '../db.js'; // Ensure the correct path
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log('Email:', email);
-  console.log('Password:', password);
+  console.log('Email:from Login Controller', email);
+  console.log('Password from Login Controller:', password);
 
   // Trim the password to remove leading and trailing whitespace
   const trimmedPassword = password.trim();
