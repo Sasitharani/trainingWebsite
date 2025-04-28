@@ -180,7 +180,7 @@ export const loginController = async (req, res) => {
       }
 
       if (results.length === 0) {
-        return res.status(401).json({ message: 'Invalid username or password' });
+        return res.status(401).json({ message: 'Invalidsdf sfsd sfs username or password' });
       }
 
       const user = results[0];
@@ -189,7 +189,7 @@ export const loginController = async (req, res) => {
       const isPasswordMatch = await bcrypt.compare(password, user.password);
 
       if (!isPasswordMatch) {
-        return res.status(401).json({ message: 'Invalid username or password' });
+        return res.status(401).json({ message: 'Invalid sdf sdf  sd fsdusername or password' });
       }
 
       // Check if the user is an admin
