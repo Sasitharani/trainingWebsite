@@ -167,38 +167,4 @@ export const deleteQuizzesController = async (req, res) => {
   }
 };
 
-export const loginController = async (req, res) => {
-  const { username, password } = req.body;
 
-  try {
-    // Query the database for the user
-    const query = 'SELECT * FROM iitiusers WHERE username = ?';
-    db.query(query, [username], async (err, results) => {
-      if (err) {
-        console.error('Error querying the database:', err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-
-      if (results.length === 0) {
-        return res.status(401).json({ message: 'Invalidsdf sfsd sfs username or password' });
-      }
-
-      const user = results[0];
-
-      // Compare the provided password with the hashed password in the database
-      const isPasswordMatch = await bcrypt.compare(password, user.password);
-
-      if (!isPasswordMatch) {
-        return res.status(401).json({ message: 'Invalid sdf sdf  sd fsdusername or password' });
-      }
-
-      // Check if the user is an admin
-      const isAdmin = user.membership === 'admin';
-
-      return res.status(200).json({ message: 'Login successful', isAdmin });
-    });
-  } catch (error) {
-    console.error('Error during login:', error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};

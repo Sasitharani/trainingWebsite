@@ -21,8 +21,7 @@ router.delete('/delete-quiz/:id', deleteQuizController);
 // Route to delete quizzes
 router.post('/delete-quizzes', deleteQuizzesController);
 
-// Route to login
-router.post('/login', loginController);
+
 
 // Route to sign up
 router.post('/signup', signUpController);
