@@ -20,10 +20,10 @@ const login = async (req, res) => {
         return;
       }
       const user = results[0];
-      console.log('Comparing passwords:', password, user.password);
+      const trimmedPassword = password.trim(); // Trim the password to remove leading/trailing whitespace
+      console.log('Comparing passwords:', trimmedPassword, user.password);
 
-      // Compare the plain text password with the hashed password stored in the database
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = await bcrypt.compare(trimmedPassword, user.password); // Compare trimmed password
       console.log('Password comparison result:', isPasswordValid);
 
       if (!isPasswordValid) {
@@ -34,7 +34,7 @@ const login = async (req, res) => {
       res.status(200).send({ 
         message: 'Login successful', 
         logs: {
-          enteredPassword: password,
+          enteredPassword: trimmedPassword,
           storedHash: user.password,
           passwordValid: isPasswordValid
         }
