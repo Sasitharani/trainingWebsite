@@ -24,19 +24,17 @@ const Login = () => {
     const handleLogin1 = async (e) => {
         e.preventDefault();
         setLoading(true); // Set loading to true
-        console.log('Login form submitted');
         try {
-            console.log('Email:', email); // Debugging log for email
+            const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
             const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
                 email,
-                password // Send plain text password for comparison
+                password: hashedPassword // Send hashed password
             });
 
-            console.log('Login Payload:', { email, password }); // Debugging log for login payload
+            console.log('Login Payload:', { email, password: hashedPassword }); // Debugging log for login payload
             console.log('Login API Response:', response.data); // Debugging log for login response
 
             if (response.data.message === 'Login successful') {
-                console.log('Plain text password comparison successful'); // Debugging log for plain text password
                 setMessage('Login Successfully');
                 dispatch(login({ email, username: response.data.username }));
                 localStorage.setItem('user', JSON.stringify({ email }));

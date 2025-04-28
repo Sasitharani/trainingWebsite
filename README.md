@@ -30,3 +30,4 @@ TO Do
 5)When user signsup by default the menbership column in the table iitiusers should be free
 6)There is a problem in login in both sign up and login check it last commit Add login route and enhance signup component with form validation
 7)Create profile pafe with related details.
+8)Give provision for logout once logged in

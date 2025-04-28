@@ -7,7 +7,7 @@ import UsernameAuthentication from './signUp/Username';
 import EmailAuthentication from './signUp/Email';
 import PasswordVerification from './signUp/Password';
 import PasswordMatch from './signUp/PasswordMatch';
-
+import bcrypt from 'bcryptjs';
 
 const Signup = () => {
     const [username, setUsername] = useState('');
@@ -36,22 +36,17 @@ const Signup = () => {
 
         if (isEmailValid && isPasswordValid && matchPasswordVerified) {
             console.log('All verifications passed, proceeding with signup...');
-            console.log('Password:', password);
             try {
+                const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
                 const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/signup', {
                     username,
                     email,
-                    password, // Save password as plain text for testing
+                    password: hashedPassword, // Send hashed password
                     phoneNumber
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Bypass-Hashing': 'true' // Custom header to bypass hashing for testing
-                    }});
+                });
 
                 if (response.status === 200) {
                     setMessage('User registered successfully!');
-                    console.log('Plain text password saved:', password); // Debugging log for plain text password
                     navigate('/login');
                 } else {
                     throw new Error('Signup failed');
