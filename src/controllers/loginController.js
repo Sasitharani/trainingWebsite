@@ -26,13 +26,19 @@ const login = async (req, res) => {
       const user = results[0];
       console.log('Comparing passwords:', trimmedPassword, user.password);
 
-      // Rehash the trimmed password and log it
-      //const rehashedPassword = await bcrypt.hash(trimmedPassword, 10);
-     // console.log('Rehashed Password:', rehashedPassword);
-
-      console.log('Login request received with email:', email); // Debugging log for email
-      console.log('Password entered:', trimmedPassword); // Debugging log for entered password
-      console.log('Password from DB:', user.password); // Debugging log for password from database
+      if(user.password === trimmedPassword) {  // Check if the password is plain text (for testing purposes)
+        console.log('Password is plain text, skipping bcrypt comparison.'); // Debugging log  
+        res.status(200).send({ 
+          message: 'Login successful', 
+          logs: {
+            enteredPassword: trimmedPassword,
+            storedHash: user.password,
+            passwordValid: true
+          }
+        });
+        return;
+      }
+ 
       const isPasswordValid = await bcrypt.compare(trimmedPassword, user.password);
       console.log('Password comparison result:', isPasswordValid); // Debugging log for password comparison result
 
