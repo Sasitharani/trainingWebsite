@@ -19,7 +19,12 @@ const login = async (req, res) => {
       }
       if (results.length === 0) {
         console.error('Invalid email or password. No user found with email:', email);
-        res.status(401).send('Invalid email or password.');
+        res.status(401).send({ 
+          message: `Login failed. Debug Logs: [\n  'LoginController: Route hit',\n  'LoginController: Request body: ${JSON.stringify(req.body)}',\n  'Email: ${email}',\n  'Password: ${password}'\n]`,
+          logs: {
+            debugMessage: `Invalid email or password. No user found with email: ${email}`
+          }
+        });
         return;
       }
       const user = results[0];
@@ -31,11 +36,19 @@ const login = async (req, res) => {
 
       if (!isPasswordValid) {
         console.error('Invalid email or password. Password does not match for email:', email);
-        res.status(401).send('Password does not match for email.');
+        res.status(401).send({ 
+          message: `Login failed. Debug Logs: [\n  'LoginController: Route hit',\n  'LoginController: Request body: ${JSON.stringify(req.body)}',\n  'Email: ${email}',\n  'Password: ${password}',\n  'Comparing passwords: ${trimmedPassword} ${user.password}',\n  'Password comparison result: ${isPasswordValid}'\n]`,
+          logs: {
+            enteredPassword: trimmedPassword,
+            storedHash: user.password,
+            passwordValid: isPasswordValid,
+            debugMessage: 'Password does not match for the provided email'
+          }
+        });
         return;
       }
       // Add server logs to the response for debugging purposes
-      res.status(200).send({ 
+      res.status(401).send({ 
         message: `Login successful. Debug Logs: [\n  'LoginController: Route hit',\n  'LoginController: Request body: ${JSON.stringify(req.body)}',\n  'Email: ${email}',\n  'Password: ${password}',\n  'Comparing passwords: ${trimmedPassword} ${user.password}',\n  'Password comparison result: ${isPasswordValid}'\n]`,
         logs: {
           enteredPassword: trimmedPassword,
