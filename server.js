@@ -28,8 +28,9 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(morgan('dev')); // Log HTTP requests to the console only
 
 // Register routes
-app.use('/api', quizRoutes);
 app.use('/api', checkEmailAvailabilityRoute);
+//app.use('/api', quizRoutes);
+
 //app.use('/api', loginRoute);
 
 // Add a catch-all route to debug unhandled routes
