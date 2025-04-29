@@ -37,6 +37,7 @@ const Login = () => {
 
             console.log('Login Payload:', { email, password: hashedPassword }); // Debugging log for login payload
             console.log('Login API Response:', response.data); // Debugging log for login response
+            console.log('Server Message:', response.data.message);
 
             if (response.data.message === 'Login successful') {
                 setMessage('Login Successfully');

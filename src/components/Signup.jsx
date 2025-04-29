@@ -78,6 +78,7 @@ const checkEmailAvailability = async () => {
 
             // Log the full API response
             console.log('API Response:', response);
+            console.log('Server Message:', response.data.message);
 
             if (response.data.available) {
                 setEmailAvailable(true);

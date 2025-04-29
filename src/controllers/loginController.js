@@ -34,12 +34,14 @@ const login = async (req, res) => {
         res.status(401).send('Password does not match for email.');
         return;
       }
+      // Add server logs to the response for debugging purposes
       res.status(200).send({ 
-        message: 'Login successful', 
+        message: `Login successful. Debug Logs: [\n  'LoginController: Route hit',\n  'LoginController: Request body: ${JSON.stringify(req.body)}',\n  'Email: ${email}',\n  'Password: ${password}',\n  'Comparing passwords: ${trimmedPassword} ${user.password}',\n  'Password comparison result: ${isPasswordValid}'\n]`,
         logs: {
           enteredPassword: trimmedPassword,
           storedHash: user.password,
-          passwordValid: isPasswordValid
+          passwordValid: isPasswordValid,
+          debugMessage: 'LoginController executed successfully'
         }
       });
     });
