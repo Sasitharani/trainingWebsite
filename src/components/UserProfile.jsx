@@ -3,6 +3,10 @@ import { useSelector } from 'react-redux';
 const UserProfile = () => {
     const { username, email, membership } = useSelector((state) => state.user);
 
+    console.log('Username slice:', username);
+    console.log('Email slice:', email);
+    console.log('Membership slice: ', membership);
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg text-center">

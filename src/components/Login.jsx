@@ -30,20 +30,23 @@ const Login = () => {
         try {
             const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
             console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
-            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
-                //const response = await axios.post('http://localhost:3004/api/login', {
+            //const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
+                const response = await axios.post('http://localhost:3004/api/login', {
                 email,
                 password // Send plaintext password
             });
 
             if (response.status === 200) {
                 setMessage('Login Successfully');
+                console.log('User  Data:', response.data); // Log successful login response
+                
                 dispatch(login({ 
-                    email: response.data.email, 
-                    username: response.data.username, 
-                    membership: response.data.membership // Save membership in Redux
+                    email: response.data.user.email, 
+                    username: response.data.user.username, 
+                    membership: response.data.user.membership, 
                 }));
-                localStorage.setItem('user', JSON.stringify({ email, username: response.data.username }));
+
+                //localStorage.setItem('user', JSON.stringify({ email, username: response.data.username }));
                 navigate('/user-profile');
             } else {
                 setMessage(response.data.message || 'Login failed.');

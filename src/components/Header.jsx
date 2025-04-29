@@ -33,7 +33,7 @@ export default function Header() {
           <li><Link to="/logo-animation" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Test Page</Link></li>
           {isAdmin && <li><Link to="/admin-view" className="hover:text-gray-400">Admin View</Link></li>}
           {isAdmin && <li><Link to="/admin-quiz" className="hover:text-gray-400">Admin Quiz</Link></li>}
-          {isLoggedIn ? (
+          {isLoggedIn && email ? (
             <li className="hover:text-gray-400">{email.slice(0, email.indexOf('@'))}</li>
           ) : (
             <li><Link to="/login" className="hover:text-gray-400 hover:shadow-[0_0_20px_5px_rgba(0,255,255,0.8)]">Login</Link></li>
