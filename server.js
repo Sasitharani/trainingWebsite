@@ -29,7 +29,7 @@ app.use(morgan('dev')); // Log HTTP requests to the console only
 
 // Register routes
 app.use('/api', checkEmailAvailabilityRoute);
-//app.use('/api', quizRoutes);
+app.use('/api', quizRoutes);
 
 //app.use('/api', loginRoute);
 

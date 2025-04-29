@@ -38,6 +38,13 @@ const Login = () => {
             console.log('Login Payload:', { email, password: hashedPassword }); // Debugging log for login payload
             console.log('Login API Response:', response.data); // Debugging log for login response
             console.log('Server Message:', response.data.message);
+            console.log('server logs all:', response.data.logs); // Log server logs
+            console.log('Entered Password:', response.data.logs.enteredPassword); // Log entered password
+            console.log('Stored Hash:', response.data.logs.storedHash); // Log stored hash
+            console.log('Password Valid:', response.data.logs.passwordValid); // Log password validity
+            console.log('Debug Message:', response.data.logs.debugMessage); // Log debug message
+            
+   
 
             if (response.data.message === 'Login successful') {
                 setMessage('Login Successfully');
