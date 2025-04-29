@@ -2,6 +2,9 @@ import bcrypt from 'bcryptjs';
 import db from '../db.js'; // Ensure the correct path
 
 const login = async (req, res) => {
+  console.log('LoginController: Route hit');
+  console.log('LoginController: Request body:', req.body);
+
   const { email, password } = req.body;
   console.log('Email:', email);
   console.log('Password:', password);
