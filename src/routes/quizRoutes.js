@@ -1,6 +1,7 @@
 import express from 'express';
 import { uploadQuizController, fetchQuizzesController, test, editQuizController, deleteQuizzesController, deleteQuizController, fetchQuizzesWithAnswerController } from '../controllers/quizController.js';
 import { signUpController } from '../controllers/signUpController.js';
+import { login } from '../controllers/loginController.js';
 
 const router = express.Router();
 
@@ -25,6 +26,8 @@ router.post('/delete-quizzes', deleteQuizzesController);
 
 // Route to sign up
 router.post('/signup', signUpController);
+router.post('/login', login);
+
 
 
 

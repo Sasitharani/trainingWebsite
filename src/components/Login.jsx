@@ -22,10 +22,14 @@ const Login = () => {
     }, [isLoggedIn]); // Add useEffect hook;
 
     const handleLogin1 = async (e) => {
+        console.log('Login function called');
         e.preventDefault();
         setLoading(true); // Set loading to true
+        console.log('Loading state:', loading); // Log loading state
+        console.log('Email:', email); // Log email value    
         try {
             const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
+            console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
             const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
                 email,
                 password: hashedPassword // Send hashed password

@@ -27,7 +27,7 @@ app.use('/api', quizRoutes);
 // Use checkEmailAvailabilityRoute for email availability endpoint
 app.use('/api', checkEmailAvailabilityRoute);
 
-app.use('/api', loginRoute);
+
 
 
 app.listen(PORT, () => {
