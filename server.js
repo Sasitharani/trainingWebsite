@@ -33,3 +33,5 @@ app.use('/api', loginRoute);
 app.listen(PORT, () => {
   console.log(`Server is running on a on port ${PORT}`);
 });
+
+console.log('Test log: Server is starting...');
