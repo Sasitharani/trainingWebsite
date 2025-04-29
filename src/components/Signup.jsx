@@ -73,6 +73,12 @@ const checkEmailAvailability = async () => {
         try {
             console.log('Checking email availability:', email); // Debugging log
             const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/check-email-availability', { email });
+            console.log('checkEmailAvailability: Function called');
+            console.log('Email to check:', email);
+
+            // Log the full API response
+            console.log('API Response:', response);
+
             if (response.data.available) {
                 setEmailAvailable(true);
                 setEmailMessage('Email is available');
@@ -82,7 +88,8 @@ const checkEmailAvailability = async () => {
                 setEmailMessage('Email is already taken');
             }
         } catch (error) {
-            console.error('Error checking email availability:', error);
+            // Log the error object for debugging
+            console.error('Error checking email availability:', error.response || error.message);
             setEmailMessage('Error checking email availability');
         } finally {
             setLoading(false); // Set loading to false after the check

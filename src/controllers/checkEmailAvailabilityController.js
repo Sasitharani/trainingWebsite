@@ -2,7 +2,7 @@ import db from '../db.js';
 
 export const checkEmailAvailabilityController = async (req, res) => {
   const { email } = req.body;
-
+  console.log('checkEmailAvailabilityController: Controller hit');
   try {
     console.log('checkEmailAvailabilityController: Route hit');
     console.log('Email availability check API hit with email:', email); // Log the email being checked
