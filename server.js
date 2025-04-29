@@ -35,3 +35,9 @@ app.listen(PORT, () => {
 });
 
 console.log('Test log: Server is starting...');
+
+// Add a catch-all route to debug unhandled routes
+app.use((req, res) => {
+    console.log('Catch-All Debug: Route not found:', req.originalUrl);
+    res.status(404).send('Route not found');
+});
