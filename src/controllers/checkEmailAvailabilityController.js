@@ -14,9 +14,19 @@ export const checkEmailAvailabilityController = async (req, res) => {
       }
 
       if (results.length > 0) {
-        return res.status(200).json({ available: false, message: 'Email is already taken' });
+        // Add server logs to the response for debugging purposes
+        return res.status(200).json({ 
+            available: false, 
+            message: 'Email is already taken', 
+            logs: 'Email already exists in the database' 
+        });
       } else {
-        return res.status(200).json({ available: true, message: 'Email is available' });
+        // For the case where the email is available
+        return res.status(200).json({ 
+            available: true, 
+            message: 'Email is available', 
+            logs: 'Email does not exist in the database' 
+        });
       }
     });
   } catch (error) {
