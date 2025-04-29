@@ -38,7 +38,11 @@ const Login = () => {
 
             if (response.status === 200) {
                 setMessage('Login Successfully');
-                dispatch(login({ email, username: response.data.username }));
+                dispatch(login({ 
+                    email: response.data.email, 
+                    username: response.data.username, 
+                    membership: response.data.membership // Save membership in Redux
+                }));
                 localStorage.setItem('user', JSON.stringify({ email, username: response.data.username }));
                 navigate('/user-profile');
             } else {

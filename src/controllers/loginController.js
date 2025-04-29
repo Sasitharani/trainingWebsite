@@ -29,7 +29,13 @@ const login = async (req, res) => {
         return;
       }
 
-      res.status(200).send({ message: 'Successful login' });
+      // Fetch membership and send it in the response
+      res.status(200).send({ 
+        message: 'Successful login', 
+        email: user.email, 
+        username: user.username, 
+        membership: user.membership 
+      });
     });
   } catch (error) {
     console.error('Error logging in user:', error);
