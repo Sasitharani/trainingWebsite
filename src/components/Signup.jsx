@@ -39,6 +39,7 @@ const Signup = () => {
             try {
                 const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
                 const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/signup', {
+                   // const response = await axios.post('http://localhost:3004/api/signup', {
                     username,
                     email,
                     password: hashedPassword, // Send hashed password
@@ -47,7 +48,7 @@ const Signup = () => {
 
                 if (response.status === 200) {
                     setMessage('User registered successfully!');
-                    navigate('/login');
+                    navigate('/login'); // Navigate to login page on successful signup
                 } else {
                     throw new Error('Signup failed');
                 }

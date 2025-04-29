@@ -31,28 +31,18 @@ const Login = () => {
             const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
             console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
             const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
+                //const response = await axios.post('http://localhost:3004/api/login', {
                 email,
-                password: hashedPassword // Send hashed password
+                password // Send plaintext password
             });
 
-            console.log('Login Payload:', { email, password: hashedPassword }); // Debugging log for login payload
-            console.log('Login API Response:', response.data); // Debugging log for login response
-            console.log('Server Message:', response.data.message);
-            console.log('server logs all:', response.data.logs); // Log server logs
-            console.log('Entered Password:', response.data.logs.enteredPassword); // Log entered password
-            console.log('Stored Hash:', response.data.logs.storedHash); // Log stored hash
-            console.log('Password Valid:', response.data.logs.passwordValid); // Log password validity
-            console.log('Debug Message:', response.data.logs.debugMessage); // Log debug message
-            
-   
-
-            if (response.data.message === 'Login successful') {
+            if (response.status === 200) {
                 setMessage('Login Successfully');
                 dispatch(login({ email, username: response.data.username }));
-                localStorage.setItem('user', JSON.stringify({ email }));
+                localStorage.setItem('user', JSON.stringify({ email, username: response.data.username }));
                 navigate('/user-profile');
             } else {
-                setMessage('Password did not match.');
+                setMessage(response.data.message || 'Login failed.');
             }
         } catch (error) {
             console.error('Error during login:', error);
