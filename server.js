@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import quizRoutes from './src/routes/quizRoutes.js';
 import checkEmailAvailabilityRoute from './src/routes/checkEmailAvailabilityRoute.js';
 import loginRoute from './src/routes/loginRoute.js';
+import morgan from 'morgan';
 
 import db from './src/db.js';
 
@@ -17,8 +18,8 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 
-app.use(cors()); // Enable CORS
-app.use(bodyParser.json());
+// Use morgan for logging HTTP requests
+app.use(morgan('dev')); // Log HTTP requests to the console only
 
 // Use quizRoutes for all quiz-related endpoints
 app.use('/api', quizRoutes);
