@@ -39,12 +39,13 @@ const login = async (req, res) => {
         return;
       } else {
         console.log('Password is valid. Proceeding with login.');
+        console.log('User fetched from database:', user); // Debugging log for user data
         res.status(200).send({ 
           message: 'Login successful.',
           user: {
             username: user.username,
             email: user.email,
-            membership: user.membership
+            membership: user.membership // Ensure membership is included
           }
         });
         return; // Ensure no further code is executed

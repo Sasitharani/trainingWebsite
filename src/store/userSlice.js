@@ -6,6 +6,7 @@ const initialState = {
   username: '',
   token: '',
   votesData: [],
+  membership: null, // Added membership from the other slice
 };
 
 const userSlice = createSlice({
@@ -13,13 +14,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      state.isLoggedIn = true;
+      state.isLoggedIn = true; // Set isLoggedIn to true when user logs in
       state.email = action.payload.email;
       state.username = action.payload.username;
       state.token = action.payload.token;
+      state.membership = action.payload.membership; // Added membership handling
     },
     loginSuccess: (state, action) => {
-      state.votesData = action.payload.votesData;
+      // state.votesData = action.payload.votesData;
     },
     logout: (state) => {
       state.isLoggedIn = false;
@@ -27,6 +29,7 @@ const userSlice = createSlice({
       state.username = '';
       state.token = '';
       state.votesData = [];
+      state.membership = null; // Reset membership
     },
   },
 });

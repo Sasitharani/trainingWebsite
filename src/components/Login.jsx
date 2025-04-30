@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'; // Replaced bcrypt with bcryptjs for browser compatibility
 import { Link, useNavigate } from 'react-router-dom';
 import GoogleLogin from '../GoogleLogin'; // Import GoogleLogin component
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,21 +12,20 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false); // Add loading state
+
     const navigate = useNavigate();
     const dispatch = useDispatch();                 
     const isLoggedIn = useSelector(state => state.user.isLoggedIn); // Get isLoggedIn from slice
 
     useEffect(() => {
-        //console.log('Login use effect');
-        //console.log('isLoggedIn from slice displayed from login.jsx:', isLoggedIn); // Log isLoggedIn value
-    }, [isLoggedIn]); // Add useEffect hook;
+
+    }, []); // Add useEffect hook;
 
     const handleLogin1 = async (e) => {
         console.log('Login function called');
         e.preventDefault();
         setLoading(true); // Set loading to true
-        console.log('Loading state:', loading); // Log loading state
-        console.log('Email:', email); // Log email value    
+
         try {
             const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
             console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
@@ -38,14 +37,20 @@ const Login = () => {
 
             if (response.status === 200) {
                 setMessage('Login Successfully');
-                console.log('User  Data:', response.data); // Log successful login response
+                dispatch(loginSuccess());
+                Swal.fire({
+                    title: 'Login Success',
+                    text: `You have Sucessfully Logged In.`,
+                    icon: 'Success',
+                    confirmButtonText: 'OK'
+                });
                 
                 dispatch(login({ 
                     email: response.data.user.email, 
                     username: response.data.user.username, 
                     membership: response.data.user.membership, 
                 }));
-
+              
                 //localStorage.setItem('user', JSON.stringify({ email, username: response.data.username }));
                 navigate('/user-profile');
             } else {

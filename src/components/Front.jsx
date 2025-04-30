@@ -20,8 +20,26 @@ export default function Front() {
               <img src={bgImage} alt="Background" className="w-full h-full object-cover" />
           </div>
           {/* Right side */}
-          <div className="w-3/4 bg-black-500">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
+          <div className="w-3/4 bg-black-500 flex flex-col items-center justify-center relative">
+              {/* Happening Buttons Section */}
+              <div className="flex flex-col sm:flex-row gap-8 mt-10 mb-12 z-10">
+                <Link
+                  to="/simple"
+                  className="relative inline-block px-10 py-5 rounded-xl font-extrabold text-lg text-white bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 shadow-xl shadow-cyan-500/30 hover:from-pink-500 hover:to-yellow-500 hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out animate-bounce"
+                >
+                  Simple
+                  <span className="absolute -top-3 -right-3 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full animate-pulse shadow-lg">New</span>
+                </Link>
+                <Link
+                  to="/login"
+                  className="relative inline-block px-10 py-5 rounded-xl font-extrabold text-lg text-white bg-gradient-to-r from-green-400 via-teal-500 to-blue-600 shadow-xl shadow-green-500/30 hover:from-orange-500 hover:to-pink-500 hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out animate-bounce"
+                >
+                  With Login
+                  <span className="absolute -bottom-3 -left-3 bg-pink-400 text-white text-xs px-2 py-1 rounded-full animate-pulse shadow-lg">Secure</span>
+                </Link>
+              </div>
+              {/* Tiles Section (optional, can be moved below or above buttons) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4 opacity-90">
                   {tiles.map((tile, index) => (
                       <div
                           key={index}
@@ -32,17 +50,17 @@ export default function Front() {
                               width: '280px',
                               height: '250px',
                               transition: 'transform 0.3s',
-                              border: '2px solid #FFF', // Added border
-                              borderRadius: '10px', // Added rounded border
+                              border: '2px solid #FFF',
+                              borderRadius: '10px',
                           }}
-                          data-hover-text={`Hover text for ${tile.text}`} // Placeholder for hover text
+                          data-hover-text={`Hover text for ${tile.text}`}
                           onMouseEnter={(e) => {
                               e.currentTarget.style.transform = 'scale(1.1)';
-                              e.currentTarget.style.zIndex = '10'; // Set highest zIndex on hover
+                              e.currentTarget.style.zIndex = '10';
                           }}
                           onMouseLeave={(e) => {
                               e.currentTarget.style.transform = 'scale(1)';
-                              e.currentTarget.style.zIndex = '1'; // Reset zIndex on leave
+                              e.currentTarget.style.zIndex = '1';
                           }}
                       >
                           {tile.text}
