@@ -29,8 +29,8 @@ const Login = () => {
         try {
             const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
             console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
-            //const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
-                const response = await axios.post('http://localhost:3004/api/login', {
+            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
+                //const response = await axios.post('http://localhost:3004/api/login', {
                 email,
                 password // Send plaintext password
             });
