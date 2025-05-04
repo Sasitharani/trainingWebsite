@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-black text-white p-4">
+    <header className="bg-blue-700 text-white p-4">
       <nav className="flex justify-between items-center">
         <div className="text-2xl font-bold">
           <img
