@@ -21,7 +21,10 @@ export default function Analogy() {
   }, []);
 
   const handleOptionChange = (quizId, selectedOption) => {
-    setUserAnswers((prev) => ({ ...prev, [quizId]: selectedOption }));
+    setUserAnswers((prev) => {
+      const updatedAnswers = { ...prev, [quizId]: selectedOption };
+      return updatedAnswers;
+    });
   };
 
   const handleSubmit = () => {
@@ -73,7 +76,7 @@ export default function Analogy() {
                 <li key={index} className="relative">
                   <label
                     className={`block bg-gray-200 rounded-lg p-3 cursor-pointer transition ${
-                      userAnswers[quiz.id] === option ? 'bg-[#f9cf45] border border-solid border-[#e7e7ec]' : 'hover:bg-[#f9cf45] hover:border hover:border-solid hover:border-[#e7e7ec]'
+                      userAnswers[quiz.id] === option ? 'bg-yellow-300 border border-solid border-yellow-500' : 'hover:bg-yellow-100 hover:border hover:border-solid hover:border-gray-300'
                     }`}
                   >
                     <input

@@ -63,3 +63,58 @@ header .menu .dropdown-content button:hover {
 header .menu .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.grid {
+  border: 2px solid black; /* Add a small border */
+  border-radius: 8px; /* Small rounded corners */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.grid:hover {
+  box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.5); /* Green glow effect */
+  transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+.neumorphic-button {
+  background: #f5f5f5;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neumorphic-button:hover {
+  transform: perspective(500px) translateZ(10px);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.15), -8px -8px 15px rgba(255, 255, 255, 0.8);
+}
+
+.neumorphic-button:active {
+  transform: scale(0.95); /* Slightly shrink the button when clicked */
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.5); /* Inner shadow effect */
+}
+
+.rectangle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px; /* Set a fixed width for uniform size */
+  height: 100px; /* Set a fixed height for uniform size */
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0); /* Minimalistic gradient */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+}
+
+.rectangle:hover {
+  transform: translateY(-5px); /* Slight upward movement */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Professional shadow effect */
+}
+
+.rectangle a {
+  color: #333; /* Neutral text color */
+  font-weight: bold; /* Professional font weight */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.rectangle a:hover {
+  color: #007BFF; /* Subtle blue color on hover */
+}
