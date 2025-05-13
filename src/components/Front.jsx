@@ -152,6 +152,18 @@ const HomePage = () => {
 
   return (
     <div style={{ backgroundColor: '#f5f5f5' }}>
+      <head>
+        <meta name="description" content="Empowering students with placement and coding training through one-to-one live sessions in English, Hindi, and Tamil. Join us to excel in competitive placements!" />
+        <meta name="keywords" content="placement training, coding training, one-to-one sessions, competitive placements, English, Hindi, Tamil" />
+        <meta property="og:title" content="IITI - Your Companion for Your Dream Job" />
+        <meta property="og:description" content="Empowering students with placement and coding training through one-to-one live sessions in English, Hindi, and Tamil. Join us to excel in competitive placements!" />
+        <meta property="og:image" content="/public/img/logo.jpg" />
+        <meta property="og:url" content="https://iiti.in" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="IITI - Your Companion for Your Dream Job" />
+        <meta name="twitter:description" content="Empowering students with placement and coding training through one-to-one live sessions in English, Hindi, and Tamil. Join us to excel in competitive placements!" />
+        <meta name="twitter:image" content="/public/img/logo.jpg" />
+      </head>
       <style jsx>{`
         body {
           cursor: url(${defaultCursor}), auto;
