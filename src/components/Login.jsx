@@ -11,64 +11,90 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [loading, setLoading] = useState(false); // Add loading state
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();                 
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn); // Get isLoggedIn from slice
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+
+    // Function to check if user is admin
+    const isAdminEmail = (email) => {
+        // List of admin emails
+        const adminEmails = ['sasitharani@gmail.com'];
+        return adminEmails.includes(email.toLowerCase());
+    };
 
     useEffect(() => {
 
     }, []); // Add useEffect hook;
-
     const handleLogin1 = async (e) => {
         console.log('Login function called');
         e.preventDefault();
-        setLoading(true); // Set loading to true
+        setLoading(true);
 
         try {
-            const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before sending it to the server
-            console.log('Hashed Password:', hashedPassword); // Debugging log for hashed password
-            const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
-                //const response = await axios.post('http://localhost:3004/api/login', {
-                email,
-                password // Send plaintext password
-            });
+            // Check if this is an admin email before making the API call
+            const isAdmin = isAdminEmail(email);
+            console.log('Is admin email:', isAdmin); // Debug log
 
-            if (response.status === 200) {
-                setMessage('Login Successfully');
-                dispatch(loginSuccess());
-                Swal.fire({
-                    title: 'Login Success',
-                    text: `You have Sucessfully Logged In.`,
-                    icon: 'Success',
-                    confirmButtonText: 'OK'
+            // Make the API call
+                const response = await axios.post('https://trainingwebsite-apot.onrender.com/api/login', {
+                    email,
+                    password
                 });
-                
-                dispatch(login({ 
-                    email: response.data.user.email, 
-                    username: response.data.user.username, 
-                    membership: response.data.user.membership, 
-                }));
-              
-                //localStorage.setItem('user', JSON.stringify({ email, username: response.data.username }));
-                navigate('/user-profile');
+
+                if (response.status === 200) {
+                // Create user data object
+                    const userData = {
+                        email: response.data.user.email,
+                    username: response.data.user.username || email.split('@')[0],
+                    membership: response.data.user.membership || (isAdmin ? 'admin' : 'standard'),
+                    isAdmin: isAdmin, // Set based on email check
+                        isLoggedIn: true
+                    };
+
+                console.log('User data after login:', userData); // Debug log
+
+                    // Update Redux state
+                    dispatch(loginSuccess());
+                    dispatch(login(userData));
+
+                    // Store in localStorage
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                    // Success message
+                    Swal.fire({
+                    title: isAdmin ? 'Admin Login Success' : 'Login Success',
+                    text: isAdmin ? 'You have successfully logged in as an administrator.' : 'You have successfully logged in.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+
+                // Explicitly handle navigation based on admin status
+                if (isAdmin) {
+                    console.log('Redirecting to admin dashboard'); // Debug log
+                    setTimeout(() => {
+                        navigate('/admin-dashboard');
+                    }, 100); // Small delay to ensure state updates first
+                } else {
+                    console.log('Redirecting to user profile'); // Debug log
+                    navigate('/user-profile');
+            }
             } else {
                 setMessage(response.data.message || 'Login failed.');
-            }
+        }
         } catch (error) {
             console.error('Error during login:', error);
             setMessage('Login failed. Please try again.');
         } finally {
-            setLoading(false); // Set loading to false
+            setLoading(false);
         }
     };
 
     const handleLogout = () => {
-        //console.log('Dispatching logout action from Login.jsx');
-        dispatch(logout({ meta: { fileName: 'Login.jsx' } })); // Dispatch logout action
-        localStorage.removeItem('user'); // Remove user from local storage
-        localStorage.removeItem('lastSpinTime'); // Reset last spin time
+        dispatch(logout({ meta: { fileName: 'Login.jsx' } }));
+        localStorage.removeItem('user');
+        localStorage.removeItem('lastSpinTime');
         navigate('/login');
     };
 
@@ -76,7 +102,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orangePastel to-pinkPastel relative">
-         
+
             {loading && (
                 <div className="absolute inset-0 bg-gray-100 bg-opacity-50 flex items-center justify-center z-50">
                     <div className="loader"></div>
@@ -138,10 +164,13 @@ const Login = () => {
                 </form>
                 {message && <p className="mt-4 text-center text-red-500">{message}</p>}
                 {user ? (
-                    <button onClick={handleLogout}>Logout</button>
-                ) : (
-                    <button onClick={handleLogin1}>Login</button>
-                )}
+                    <button
+                        onClick={handleLogout}
+                        className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    >
+                        Logout
+                    </button>
+                ) : null}
             </div>
         </div>
     );

@@ -18,10 +18,12 @@ import Opposites from './components/quizes/Opposites';
 import Alphabets from './components//quizes/Alphabets';
 import ProblemSolving from './components/quizes/ProblemSolving';
 import Logical from './components/quizes/Logical';
-
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Cost from './components/quizes/Numbers';
 import WordsRearrangement from './components/quizes/WordsRearrangement';
 import Calendar from './components/quizes/Calendar';
+import AdminBlog from './pages/AdminBlog'; // Make sure this path is correct
 
 import './App.css';
 import './tailwind.css';
@@ -74,8 +76,11 @@ function App() {
           <Route path="/problem-solving" element={<ProblemSolving />} /> {/* Added Problem Solving route */}
           <Route path="/logical" element={<Logical />} /> {/* Added Logical route */}
           <Route path="/admin-view" element={<AdminView />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/admin-blog" element={<AdminBlog />} />
         </Routes>
       </Router>
     </Provider>
