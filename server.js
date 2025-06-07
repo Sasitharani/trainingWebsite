@@ -6,6 +6,10 @@ import quizRoutes from './src/routes/quizRoutes.js';
 import checkEmailAvailabilityRoute from './src/routes/checkEmailAvailabilityRoute.js';
 import loginRoute from './src/routes/loginRoute.js';
 import morgan from 'morgan';
+import fs from 'fs';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 import db from './src/db.js';
 
@@ -31,14 +35,47 @@ app.use(morgan('dev')); // Log HTTP requests to the console only
 app.use('/api', checkEmailAvailabilityRoute);
 app.use('/api', quizRoutes);
 
+// Place the /api/blogs endpoint BEFORE the catch-all
+app.post('/api/blogs', (req, res) => {
+  const { title, content, author = "Admin" } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ error: 'Title and content are required' });
+  }
+
+  const blogsPath = path.join(__dirname, 'src', 'data', 'blogs.json');
+  fs.readFile(blogsPath, 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ error: 'Failed to read blogs file' });
+
+    let blogs = [];
+    try {
+      blogs = JSON.parse(data);
+    } catch (e) {}
+
+    const newBlog = {
+      id: blogs.length ? blogs[blogs.length - 1].id + 1 : 1,
+      title,
+      content,
+      author,
+      timestamp: new Date().toISOString()
+    };
+    blogs.push(newBlog);
+
+    fs.writeFile(blogsPath, JSON.stringify(blogs, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: 'Failed to write blog' });
+      res.status(201).json(newBlog);
+    });
+  });
+});
+
 //app.use('/api', loginRoute);
 
 // Add a catch-all route to debug unhandled routes
 app.use((req, res) => {
     console.log('Catch-All Debug: Route not found:', req.originalUrl);
-    res.status(404).send('Route not found');
+    res.status(404).json({ error: 'Route not found' });
 });
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

@@ -20,19 +20,26 @@ function AdminBlog() {
     
     setIsSubmitting(true);
     setError('');
-    
+    setSuccess('');
+
     try {
-      // This will be implemented in the next step
-      // For now, just simulate a successful submission
-      setTimeout(() => {
-        setSuccess('Blog post created successfully!');
-        setIsSubmitting(false);
-        // Clear form after successful submission
-        setTitle('');
-        setContent('');
-      }, 1000);
+      const response = await fetch('http://localhost:3004/api/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content })
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to create blog post');
+      }
+
+      setSuccess('Blog post created successfully!');
+      setTitle('');
+      setContent('');
     } catch (err) {
-      setError('Failed to create blog post. Please try again.');
+      setError(err.message);
+    } finally {
       setIsSubmitting(false);
     }
   };
