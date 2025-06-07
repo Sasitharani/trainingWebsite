@@ -73,7 +73,7 @@ function Blog() {
                 key={blog.id}
                 className="p-3 border border-gray-200 rounded-md hover:bg-gray-50 transition"
               >
-                <Link to={`/blog/${blog.id}`} className="block">
+                <Link to={`/blog/${blog.id}-${blog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="block">
                   <h2 className="text-lg font-semibold text-blue-600">{blog.title}</h2>
                   <p className="text-sm text-gray-500">
                     By {blog.author} - {formatDate(blog.timestamp)}

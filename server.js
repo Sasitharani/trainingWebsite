@@ -12,6 +12,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import blogRoute from './src/routes/blogRoute.js';
 import getBlogsRoute from './src/routes/getBlogsRoute.js';
+import getBlogByIdRoute from './src/routes/getBlogByIdRoute.js';
 
 import db from './src/db.js';
 
@@ -38,6 +39,7 @@ app.use('/api', checkEmailAvailabilityRoute);
 app.use('/api', quizRoutes);
 app.use('/api', blogRoute);
 app.use('/api', getBlogsRoute);
+app.use('/api', getBlogByIdRoute);
 
 //app.use('/api', loginRoute);
 
