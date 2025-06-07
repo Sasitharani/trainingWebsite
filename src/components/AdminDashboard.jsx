@@ -12,7 +12,11 @@ export default function AdminDashboard() {
         <li>
           <Link to="/admin-quiz" className="text-blue-500 hover:underline">Admin Quiz</Link>
         </li>
+        <li>
+          <Link to="/admin-blog" className="text-blue-500 hover:underline">Manage Blog Posts</Link>
+        </li>
       </ul>
     </div>
   );
 }
+

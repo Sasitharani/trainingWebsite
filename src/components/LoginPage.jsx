@@ -9,7 +9,11 @@ export default function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
     if (email === 'sasitharani@gmail.com' && password === 'SasiJaga09$') {
-      localStorage.setItem('user', JSON.stringify({ email }));
+      // Store both email and isAdmin flag
+      localStorage.setItem('user', JSON.stringify({
+        email,
+        isAdmin: true
+      }));
       navigate('/admin-quiz');
     } else {
       alert('Invalid credentials');
@@ -43,3 +47,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
