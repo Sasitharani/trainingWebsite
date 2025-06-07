@@ -11,6 +11,7 @@ import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import blogRoute from './src/routes/blogRoute.js';
+import getBlogsRoute from './src/routes/getBlogsRoute.js';
 
 import db from './src/db.js';
 
@@ -36,38 +37,7 @@ app.use(morgan('dev')); // Log HTTP requests to the console only
 app.use('/api', checkEmailAvailabilityRoute);
 app.use('/api', quizRoutes);
 app.use('/api', blogRoute);
-
-// Place the /api/blogs endpoint BEFORE the catch-all
-app.post('/api/blogs', (req, res) => {
-  const { title, content, author = "Admin" } = req.body;
-  if (!title || !content) {
-    return res.status(400).json({ error: 'Title and content are required' });
-  }
-
-  const blogsPath = path.join(__dirname, 'src', 'data', 'blogs.json');
-  fs.readFile(blogsPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ error: 'Failed to read blogs file' });
-
-    let blogs = [];
-    try {
-      blogs = JSON.parse(data);
-    } catch (e) {}
-
-    const newBlog = {
-      id: blogs.length ? blogs[blogs.length - 1].id + 1 : 1,
-      title,
-      content,
-      author,
-      timestamp: new Date().toISOString()
-    };
-    blogs.push(newBlog);
-
-    fs.writeFile(blogsPath, JSON.stringify(blogs, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: 'Failed to write blog' });
-      res.status(201).json(newBlog);
-    });
-  });
-});
+app.use('/api', getBlogsRoute);
 
 //app.use('/api', loginRoute);
 

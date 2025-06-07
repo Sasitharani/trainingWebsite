@@ -10,7 +10,7 @@ function Blog() {
     // Fetch blogs from the backend API (MySQL)
     const fetchBlogs = async () => {
       try {
-        const response = await fetch('/api/blogs');
+        const response = await fetch('https://newtrainingwebsite.onrender.com/api/blogs');
         if (!response.ok) throw new Error('Failed to fetch blogs');
         const data = await response.json();
         setBlogs(data);

@@ -23,15 +23,26 @@ function AdminBlog() {
     setSuccess('');
 
     try {
-      const response = await fetch('/api/blogs', {
+      const response = await fetch('https://newtrainingwebsite.onrender.com/api/blogs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, content })
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to create blog post');
+        let errorMsg = 'Failed to create blog post';
+        try {
+          const data = await response.clone().json();
+          errorMsg = data.error || errorMsg;
+        } catch {
+          try {
+            const text = await response.text();
+            errorMsg = text || errorMsg;
+          } catch {
+            // fallback: keep default errorMsg
+          }
+        }
+        throw new Error(errorMsg);
       }
 
       setSuccess('Blog post created successfully!');
