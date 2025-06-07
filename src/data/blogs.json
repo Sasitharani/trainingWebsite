@@ -1,41 +1,7 @@
 [
+
   {
     "id": 1,
-    "title": "Understanding Tarot Spreads",
-    "content": "Tarot spreads are arrangements of cards that create a framework for readings. Each position in a spread has a specific meaning that influences how the card placed there should be interpreted.\n\nThe most basic spread is the single card draw, which provides a simple answer or insight into a specific question. Three-card spreads are also popular and versatile, with positions typically representing past, present, and future, or mind, body, and spirit.\n\nMore complex spreads like the Celtic Cross offer a comprehensive view of a situation, addressing various aspects such as challenges, external influences, hopes, and outcomes. By using different spreads, readers can tailor their approach to the specific needs of each reading.",
-    "author": "Tarot Master",
-    "timestamp": "2023-07-15T14:30:00Z"
-  },
-  {
-    "id": 2,
-    "title": "The History of Tarot Cards",
-    "content": "The tarot has a rich and complex history dating back to the mid-15th century in Europe. Originally used for playing games, these cards evolved over centuries to become powerful tools for divination and self-reflection.\n\nThe earliest known tarot decks originated in Northern Italy, created for the nobility as playing cards for a game called 'tarocchi'. These early decks featured elaborately illustrated trump cards alongside the four standard suits. It wasn't until the 18th century that tarot cards began to be widely used for divination purposes.\n\nThe Rider-Waite-Smith deck, created in 1909, revolutionized tarot with its fully illustrated minor arcana and symbolism drawn from various mystical traditions. This deck continues to influence most modern tarot designs and remains one of the most popular decks for beginners and experienced readers alike.",
-    "author": "History Buff",
-    "timestamp": "2023-06-28T09:15:00Z"
-  },
-  {
-    "id": 3,
-    "title": "Connecting with Your Tarot Deck",
-    "content": "Building a relationship with your tarot deck is essential for meaningful readings. Many practitioners develop rituals and practices to attune themselves to their cards and enhance their intuitive connection.\n\nSome readers sleep with their new deck under their pillow, while others carry it with them for several days. A common practice is to cleanse a new deck by placing it near a window during a full moon or by surrounding it with cleansing crystals like clear quartz or selenite.\n\nRegularly handling your cards through practices like daily draws helps you become familiar with their energy and imagery. Shuffling mindfully before readings allows you to center yourself and focus your intentions. Remember that your relationship with your deck is personal—trust your intuition to guide you in developing practices that feel right for you.",
-    "author": "Intuitive Reader",
-    "timestamp": "2023-06-10T16:45:00Z"
-  },
-  {
-    "id": 4,
-    "title": "Interpreting the Major Arcana",
-    "content": "The Major Arcana cards represent significant life events and spiritual lessons. These 22 cards, from The Fool (0) to The World (21), tell the story of the Fool's Journey—a metaphor for our path through life and the lessons we learn along the way.\n\nWhen Major Arcana cards appear in a reading, they often signal important themes or pivotal moments. The Fool represents new beginnings and taking leaps of faith, while Death signifies transformation and letting go of what no longer serves us. The Tower might indicate sudden change or revelation, and The Star offers hope and inspiration after difficult times.\n\nPaying attention to the sequence of Major Arcana cards can provide insights into where you are in your own journey. Are you at the beginning stages with The Fool or Magician? In the middle with cards like Justice or Temperance? Or approaching completion with The Sun or The World?",
-    "author": "Arcana Expert",
-    "timestamp": "2023-05-22T11:30:00Z"
-  },
-  {
-    "id": 5,
-    "title": "Tarot for Self-Care and Mindfulness",
-    "content": "Tarot can be a powerful tool for self-care and mindfulness practices. Beyond fortune-telling, the cards offer a framework for reflection and personal growth.\n\nA simple daily card draw can set an intention for your day or provide a focus for meditation. Journaling about the card's meaning in relation to your life experiences deepens your self-awareness and creates a record of your journey.\n\nTarot can also be incorporated into other mindfulness practices. Try placing a card that represents your desired state of mind on your yoga mat during practice, or use the imagery of a card like The Star or Temperance as a visualization during meditation.\n\nRemember that tarot is ultimately a mirror that reflects your inner wisdom back to you. By approaching the cards with openness and curiosity rather than fear or rigid expectations, you create space for meaningful insights and personal transformation.",
-    "author": "Wellness Guide",
-    "timestamp": "2023-04-15T10:00:00Z"
-  },
-  {
-    "id": 6,
     "title": "Sasitharani",
     "content": "Sasitharani",
     "author": "Admin",

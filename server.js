@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import blogRoute from './src/routes/blogRoute.js';
 
 import db from './src/db.js';
 
@@ -34,6 +35,7 @@ app.use(morgan('dev')); // Log HTTP requests to the console only
 // Register routes
 app.use('/api', checkEmailAvailabilityRoute);
 app.use('/api', quizRoutes);
+app.use('/api', blogRoute);
 
 // Place the /api/blogs endpoint BEFORE the catch-all
 app.post('/api/blogs', (req, res) => {

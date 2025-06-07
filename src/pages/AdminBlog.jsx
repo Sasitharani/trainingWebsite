@@ -23,7 +23,7 @@ function AdminBlog() {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:3004/api/blogs', {
+      const response = await fetch('/api/blogs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, content })
