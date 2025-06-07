@@ -118,7 +118,7 @@ const Contact = () => {
       )}
       {submitted && (
         <div className="text-green-500 text-xl font-bold text-center mb-4 animate-bounce">
-          We have successfully received your enquiry. We will contact you soon.
+          We have successfully received your message for free demo. We will contact you soon.
         </div>
       )}
       {!submitted && (

@@ -25,7 +25,7 @@ const HomePage = () => {
               window.open(url, "_blank");
             }}
           >
-            Chat with Us
+            Message for Free Demo
           </button>
         </div>
       ),
@@ -90,7 +90,7 @@ const HomePage = () => {
               window.open(url, "_blank");
             }}
           >
-            Chat with Us
+            Message for Free Demo
           </button>
         </div>
       ),
@@ -104,7 +104,7 @@ const HomePage = () => {
             Our courses are competitively priced to ensure accessibility. Fees vary based on program duration and format. For detailed pricing, contact us via WhatsApp or visit our website.
           </p>
           <p className="text-gray-600 mt-2 font-semibold">
-            Example: Quantitative Training - Starting at Rs 5000/month, Coding Mastery - Starting at Rs 5000/month.
+            Message us for free Demo
           </p>
           <button
             className="mt-4 bg-blue-700 text-blue-900 font-semibold py-2 px-4 rounded-lg neumorphic-button"
@@ -115,7 +115,7 @@ const HomePage = () => {
               window.open(url, "_blank");
             }}
           >
-            Chat with Us
+            Message for Free Demo
           </button>
         </div>
       ),
@@ -335,7 +335,7 @@ const HomePage = () => {
         className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-green-500 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full neumorphic-button flex items-center z-50 text-sm sm:text-base"
       >
         <i className="fab fa-whatsapp mr-1 sm:mr-2 text-lg sm:text-xl text-green-500"></i> 
-        <span className='text-blue-900'>Enquiry</span>
+        <span className='text-blue-900'>Message for Free Demo</span>
       </button>
     </div>
   );
