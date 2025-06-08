@@ -20,7 +20,6 @@ import ProblemSolving from './components/quizes/ProblemSolving';
 import Logical from './components/quizes/Logical';
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-import Cost from './components/quizes/Numbers';
 import WordsRearrangement from './components/quizes/WordsRearrangement';
 import Calendar from './components/quizes/Calendar';
 import AdminBlog from './pages/AdminBlog'; // Make sure this path is correct
