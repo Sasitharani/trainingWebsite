@@ -14,7 +14,8 @@ export default function Header() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.email === 'sasitharani@gmail.com') {
+    // Check both email and membership for admin
+    if (user && (user.email === 'sasitharani@gmail.com' || user.membership === 'admin')) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
