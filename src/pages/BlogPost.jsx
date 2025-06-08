@@ -12,7 +12,7 @@ function BlogPost() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`/api/blogs/${blogId}`);
+        const response = await fetch('https://newtrainingwebsite.onrender.com/api/blogs/' + blogId);
         if (!response.ok) throw new Error('Failed to fetch blog');
         const data = await response.json();
         setBlog(data);
