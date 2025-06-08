@@ -10,17 +10,9 @@ export default function Header() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const email = useSelector(state => state.user.email);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    // Check both email and membership for admin
-    if (user && (user.email === 'sasitharani@gmail.com' || user.membership === 'admin')) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
-    }
-  }, [isLoggedIn, email]);
+  const isAdmin = useSelector(state =>
+    state.user.email === 'sasitharani@gmail.com' || state.user.membership === 'admin'
+  );
 
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action to update Redux state

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function AdminBlog() {
   const [title, setTitle] = useState('');
@@ -9,6 +10,19 @@ function AdminBlog() {
   const [success, setSuccess] = useState('');
   
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const isAdmin = useSelector(state =>
+    state.user.email === 'sasitharani@gmail.com' || state.user.membership === 'admin'
+  );
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else if (!isAdmin) {
+      alert('Access denied. Admins only.');
+      navigate('/');
+    }
+  }, [isLoggedIn, isAdmin, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,7 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function AdminDashboard() {
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const isAdmin = useSelector(state =>
+    state.user.email === 'sasitharani@gmail.com' || state.user.membership === 'admin'
+  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else if (!isAdmin) {
+      alert('Access denied. Admins only.');
+      navigate('/');
+    }
+  }, [isLoggedIn, isAdmin, navigate]);
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>

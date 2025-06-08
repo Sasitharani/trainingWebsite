@@ -10,19 +10,19 @@ export default function AdminView() {
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const isAdmin = useSelector(state =>
+    state.user.email === 'sasitharani@gmail.com' || state.user.membership === 'admin'
+  );
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login'); // Redirect non-logged-in users to login
-    } else if (!user.isAdmin) {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else if (!isAdmin) {
       alert('Access denied. Admins only.');
-      navigate('/'); // Redirect non-admin users to the home page
-    } else {
-      dispatch(login(user)); // Save user credentials in Redux state
-      navigate('/admin'); // Redirect admin users to the Admin Dashboard
+      navigate('/');
     }
-  }, [navigate, dispatch]);
+  }, [isLoggedIn, isAdmin, navigate]);
 
   const fetchQuizzes = async () => {
     try {

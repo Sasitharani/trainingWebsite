@@ -44,23 +44,21 @@ const Login = () => {
                 });
 
                 if (response.status === 200) {
-                // Create user data object
+                    // Create user data object
                     const userData = {
                         email: response.data.user.email,
-                    username: response.data.user.username || email.split('@')[0],
-                    membership: response.data.user.membership || (isAdmin ? 'admin' : 'standard'),
-                    isAdmin: isAdmin, // Set based on email check
+                        username: response.data.user.username || email.split('@')[0],
+                        membership: response.data.user.membership, // Always use backend value
+                        isAdmin: isAdmin, // Set based on email check
                         isLoggedIn: true
                     };
 
-                console.log('User data after login:', userData); // Debug log
+                    console.log('Saving user to localStorage:', userData); // Debug log
+                    localStorage.setItem('user', JSON.stringify(userData));
 
                     // Update Redux state
                     dispatch(loginSuccess());
                     dispatch(login(userData));
-
-                    // Store in localStorage
-                    localStorage.setItem('user', JSON.stringify(userData));
 
                     // Success message
                     Swal.fire({
