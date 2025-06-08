@@ -40,8 +40,16 @@ app.use('/api', quizRoutes);
 app.use('/api', blogRoute);
 app.use('/api', getBlogsRoute);
 app.use('/api', getBlogByIdRoute);
+app.use('/api', loginRoute);
 
-//app.use('/api', loginRoute);
+// Serve static files from the frontend build (dist or build folder)
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// For any other route, serve index.html (for SPA routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Add a catch-all route to debug unhandled routes
 app.use((req, res) => {
@@ -49,7 +57,6 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
