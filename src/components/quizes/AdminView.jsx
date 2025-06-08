@@ -18,10 +18,15 @@ export default function AdminView() {
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login');
-    } else if (!isAdmin) {
+      return;
+    }
+    if (!isAdmin) {
       alert('Access denied. Admins only.');
       navigate('/');
+      return;
     }
+    // Only fetch quizzes if admin and logged in
+    fetchQuizzes();
   }, [isLoggedIn, isAdmin, navigate]);
 
   const fetchQuizzes = async () => {
