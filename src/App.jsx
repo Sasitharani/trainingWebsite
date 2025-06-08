@@ -45,7 +45,7 @@ function App() {
   return (
     <Provider store={store}> {/* Wrap with Provider */}
       <Router>
-        <Header />
+        <Header fromComponent="App" />
         <Routes>
           <Route path="/" element={<Front />} />
           <Route path="/coding" element={<CodingTraining />} />
