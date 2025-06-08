@@ -22,7 +22,7 @@ export default function AdminView() {
     }
     if (!isAdmin) {
       alert('Access denied. Admins only.');
-      navigate('/');
+      navigate('/user-profile');
       return;
     }
     // Only fetch quizzes if admin and logged in

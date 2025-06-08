@@ -4,15 +4,22 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export default function Header() {
+export default function Header({ fromComponent }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const email = useSelector(state => state.user.email);
+  const membership = useSelector(state => state.user.membership);
   const isAdmin = useSelector(state =>
     state.user.email === 'sasitharani@gmail.com' || state.user.membership === 'admin'
   );
+
+  // Always log these values with the component name (if provided)
+  useEffect(() => {
+    console.log(`[Header] Rendered from: ${fromComponent || 'unknown'} | email:`, email, '| membership:', membership, '| isLoggedIn:', isLoggedIn);
+  }, [email, membership, isLoggedIn, fromComponent]);
 
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action to update Redux state
@@ -52,4 +59,8 @@ export default function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  fromComponent: PropTypes.string
+};
 
